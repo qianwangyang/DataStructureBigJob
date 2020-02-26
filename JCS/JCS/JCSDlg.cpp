@@ -179,6 +179,7 @@ void CJCSDlg::logIn()
 		MessageBox("Œ¥—°‘Ò…Ì∑›");
 		break;
 	case 1 :
+		break;
 	}
 }
 
