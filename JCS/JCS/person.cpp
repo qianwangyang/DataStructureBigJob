@@ -1,13 +1,21 @@
 #include "stdafx.h"
 #include "person.h"
 
-Person::Person(int id, int pw, int status, CString name,Person *next)
+Person::Person(int id, int pw, int status, CString num,Person *next)
 {
 	this->id = id;
 	this->pw = pw;
 	this->status = status;
-	this->name = name;
+	this->num = num;
 	this->next = next;
+}
+
+Person::Person(int id, int pw, int status, CString num)
+{
+	this->id = id;
+	this->pw = pw;
+	this->status = status;
+	this->num = num;
 }
 
 int Person::getPW()
@@ -18,9 +26,9 @@ int Person::getID()
 {
 	return id;
 }
-CString Person::getName()
+CString Person::getNum()
 {
-	return name;
+	return num;
 }
 int Person::getStatus()
 {
@@ -41,9 +49,9 @@ void Person::setID(int id)
 	this->id = id;
 }
 
-void Person::setName(CString name)
+void Person::setNum(CString num)
 {
-	this->name = name;
+	this->num = num;
 }
 
 void Person::setStatus(int status)

@@ -28,13 +28,13 @@ class Assignmen
 	void SetRemark(CString remark);
 
 private:
-	CString No;
-	CString course;
-	CString contet;
-	int time;
-	CString startTime;
-	CString overTime;
-	CString remark;
+	CString No;//作业编号
+	CString course;//课程名称
+	CString contet;//作业内容
+	int time;//作业次数
+	CString startTime;//发布时间
+	CString overTime;//截止时间
+	CString remark;//备注
 
 };
 

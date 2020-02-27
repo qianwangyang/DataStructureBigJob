@@ -1,40 +1,38 @@
 #ifndef HOMEWORK_H
 #define HOMEWORK_H
 
+/**
+学生做的作业
+
+*/
 class Homework
 {
 public :
-	Homework();
-	CString course,
-		CString contet,
-		int time,
-		CString startTime,
-		CString overTime,
-		CString remark );
+	Homework(CString className,
+	CString nun,
+	CString No,
+	CString time,
+	CString remark);
 
+	CString getClassName();
+	CString getNum();
+	CString getTime();
 	CString getNo();
-	CString getCourse();
-	int getTime();
-	CString getStartTime();
-	CString getOverTime();
 	CString getRemark();
-	CString getContet();
-	void setContet(CString contet);
+
+	void setClassName(CString className);
+	void setNum(CString num);
 	void setNo(CString No);
-	void setCourse(CString course);
-	void setTime(int time);
-	void setStartTime(CString startTime);
-	void setOverTime(CString overTime);
-	void SetRemark(CString remark);
+	void setTime(CString time);
+	void setRemark(CString remark);
 
 private:
-	CString No;
-	CString course;
-	CString contet;
-	int time;
-	CString startTime;
-	CString overTime;
-	CString remark;
+	CString className;//班名
+	CString num;//学号
+	CString No;//编号
+	CString time;//截止时间
+	CString remark;//备注
+	
 
 };
 
