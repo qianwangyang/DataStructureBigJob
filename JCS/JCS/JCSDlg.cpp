@@ -175,8 +175,9 @@ void CJCSDlg::logIn()
 	// TODO:  在此添加控件通知处理程序代码
 	
 	char *name = "abc";
-	
-	MessageBox(name);
+	CString str(name);
+	//CString csr = NULL;
+	MessageBox(str);
 	switch (m_radio)
 	{
 	case 0 :

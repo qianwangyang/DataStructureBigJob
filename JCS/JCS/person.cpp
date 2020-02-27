@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "person.h"
 
-Person::Person(int id, int pw, int status, char *name,Person *next)
+Person::Person(int id, int pw, int status, CString name,Person *next)
 {
 	this->id = id;
 	this->pw = pw;
@@ -18,7 +18,7 @@ int Person::getID()
 {
 	return id;
 }
-char* Person::getName()
+CString Person::getName()
 {
 	return name;
 }
@@ -41,7 +41,7 @@ void Person::setID(int id)
 	this->id = id;
 }
 
-void Person::setName(char *name)
+void Person::setName(CString name)
 {
 	this->name = name;
 }

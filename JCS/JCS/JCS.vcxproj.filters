@@ -45,6 +45,12 @@
     <ClInclude Include="adDlg.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Assignmen.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="homework.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="JCS.cpp">
@@ -60,6 +66,15 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="adDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="memory.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Assignmen.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="homework.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
