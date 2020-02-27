@@ -28,7 +28,14 @@ void adDlg::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(adDlg, CDialogEx)
+	ON_LBN_SELCHANGE(IDC_LIST3, &adDlg::OnLbnSelchangeList3)
 END_MESSAGE_MAP()
 
 
 // adDlg 消息处理程序
+
+
+void adDlg::OnLbnSelchangeList3()
+{
+	// TODO:  在此添加控件通知处理程序代码
+}
