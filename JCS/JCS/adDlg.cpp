@@ -28,7 +28,7 @@ void adDlg::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(adDlg, CDialogEx)
-	ON_LBN_SELCHANGE(IDC_LIST3, &adDlg::OnLbnSelchangeList3)
+	ON_LBN_SELCHANGE(IDC_LIST3, &adDlg::OnLbnSelchangeList3)//º¯Êý°ó¶¨
 END_MESSAGE_MAP()
 
 

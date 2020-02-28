@@ -34,7 +34,16 @@ CString Homework::getRemark()
 {
 	return remark;
 }
+CString Homework::getCourse()
+{
+	return course;
+}
 
+
+void Homework::setCourse(CString course)
+{
+	this->course = course;
+}
 void Homework::setClassName(CString className)
 {
 	this->className = className;

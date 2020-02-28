@@ -19,17 +19,20 @@ public :
 	CString getTime();
 	CString getNo();
 	CString getRemark();
+	CString getCourse();
 
 	void setClassName(CString className);
 	void setNum(CString num);
 	void setNo(CString No);
 	void setTime(CString time);
 	void setRemark(CString remark);
+	void setCourse(CString course);
 
 private:
 	CString className;//班名
 	CString num;//学号
-	CString No;//编号
+	CString course;//课程名称
+	CString No;//作业编号
 	CString time;//截止时间
 	CString remark;//备注
 	

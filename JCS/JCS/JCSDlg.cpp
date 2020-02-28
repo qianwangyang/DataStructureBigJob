@@ -68,7 +68,7 @@ void CJCSDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_STATIC3, temp[2]);
 }
 
-BEGIN_MESSAGE_MAP(CJCSDlg, CDialogEx)
+BEGIN_MESSAGE_MAP(CJCSDlg, CDialogEx)//º¯Êý°ó¶¨
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()

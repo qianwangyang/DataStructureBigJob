@@ -34,10 +34,18 @@ int Person::getStatus()
 {
 	return status;
 }
-
 Person* Person::getPerson()
 {
 	return next;
+}
+CString Person::getClassName()
+{
+	return className;
+}
+
+void Person::setClassName(CString className)
+{
+	this->className = className;
 }
 
 void Person::setPW(int pw)

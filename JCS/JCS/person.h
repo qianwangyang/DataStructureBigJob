@@ -11,6 +11,9 @@ public :
 	CString getNum();
 	int getStatus();
 	Person* getPerson();
+	CString getClassName();
+
+	void setClassName(CString className);
 	void setPW(int pw);
 	void setID(int id);
 	void setStatus(int status);
@@ -19,6 +22,7 @@ public :
 	
 private :
 	CString num;//学号
+	CString className;//班级
 	int pw;//密码
 	int id;//账号
 	int status;//身份
