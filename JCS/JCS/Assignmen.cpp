@@ -15,6 +15,7 @@ Assignmen::Assignmen(CString No,
 	this->overTime = overTime;
 	this->remark = remark;
 }
+Assignmen::Assignmen();
 
 CString Assignmen::getNo()
 {
@@ -44,6 +45,11 @@ CString Assignmen::getContet()
 {
 	return contet;
 }
+Assignmen* Assignmen::getNext()
+{
+	return next;
+}
+
 void Assignmen::setContet(CString contet)
 {
 	this->contet = contet;
@@ -68,7 +74,12 @@ void Assignmen::setOverTime(CString overTime)
 {
 	this->overTime = overTime;
 }
-void Assignmen::SetRemark(CString remark)
+void Assignmen::setRemark(CString remark)
 {
 	this->remark = remark;
 }
+void Assignmen::setNext(Assignmen *next)
+{
+	this->next = next;
+}
+

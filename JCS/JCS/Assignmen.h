@@ -11,6 +11,7 @@ class Assignmen
 		CString startTime,
 		CString overTime,
 		CString remark );
+		Assignmen();
 
 	CString getNo();
 	CString getCourse();
@@ -19,13 +20,16 @@ class Assignmen
 	CString getOverTime();
 	CString getRemark();
 	CString getContet();
+	Assignmen* getNext();
+
+	void setNext(Assignmen *next);
 	void setContet(CString contet);
 	void setNo(CString No);
 	void setCourse(CString course);
 	void setTime(int time);
 	void setStartTime(CString startTime);
 	void setOverTime(CString overTime);
-	void SetRemark(CString remark);
+	void setRemark(CString remark);
 
 private:
 	CString No;//作业编号
@@ -35,6 +39,7 @@ private:
 	CString startTime;//发布时间
 	CString overTime;//截止时间
 	CString remark;//备注
+	Assignmen *next;
 
 };
 

@@ -182,29 +182,29 @@ void CJCSDlg::logIn()
 	//to->Create(IDD_DIALOG1, this);//第一个参数为打开窗口的ID号
 	//to->ShowWindow(SW_SHOW);
 
-	StudiesDlg *ad = new StudiesDlg();
-	ad->Create(IDD_DIALOG3, this);
-	ad->ShowWindow(SW_SHOW);
+	//StudiesDlg *ad = new StudiesDlg();
+	//ad->Create(IDD_DIALOG3, this);
+	//ad->ShowWindow(SW_SHOW);
 	
-	//char *name = "abc";
-	//CString str(name);
-	////CString csr = NULL;
-	//MessageBox(str);
-	//switch (m_radio)
-	//{
-	//case 0 :
-	//	MessageBox("未选择身份");
-	//	break;
-	//case 1 :
-	//	MessageBox("1");
-	//	break;
-	//case 2 :
-	//	MessageBox("2");
-	//	break;
-	//case 3:
-	//	MessageBox("3");
-	//	break;
-	//}
+	char *name = "abc";
+	CString str(name);
+	//CString csr = NULL;
+	MessageBox(str);
+	switch (m_radio)
+	{
+	case 0 :
+		MessageBox("未选择身份");
+		break;
+	case 1 :
+		MessageBox("1");
+		break;
+	case 2 :
+		MessageBox("2");
+		break;
+	case 3:
+		MessageBox("3");
+		break;
+	}
 }
 
 

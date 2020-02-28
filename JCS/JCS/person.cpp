@@ -34,7 +34,7 @@ int Person::getStatus()
 {
 	return status;
 }
-Person* Person::getPerson()
+Person* Person::getNext()
 {
 	return next;
 }
@@ -42,6 +42,8 @@ CString Person::getClassName()
 {
 	return className;
 }
+
+
 
 void Person::setClassName(CString className)
 {

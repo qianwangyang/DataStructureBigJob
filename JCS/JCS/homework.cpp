@@ -13,6 +13,10 @@ Homework::Homework(CString className,
 	this->time = time;
 	this->remark = remark;
 }
+Homework::Homework()
+{
+
+}
 
 CString Homework::getClassName()
 {
@@ -38,8 +42,15 @@ CString Homework::getCourse()
 {
 	return course;
 }
+Homework* Homework::getNext()
+{
+	return next;
+}
 
-
+void Homework::setNext(Homework *next)
+{
+	this->next = next;
+}
 void Homework::setCourse(CString course)
 {
 	this->course = course;

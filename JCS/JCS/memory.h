@@ -4,8 +4,10 @@ class Memory
 {
 public :
 	Memory();
-	void Read();
-	void write();
+	int read(Person *person);
+	int write(Person *person);
+	int read(Assignmen *assignmen);
+	int write(Assignmen *assignmen);
 };
 
 #endif

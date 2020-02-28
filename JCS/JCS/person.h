@@ -10,8 +10,9 @@ public :
 	int getID();
 	CString getNum();
 	int getStatus();
-	Person* getPerson();
+	Person* getNext();
 	CString getClassName();
+
 
 	void setClassName(CString className);
 	void setPW(int pw);
