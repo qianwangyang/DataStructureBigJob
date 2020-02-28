@@ -7,6 +7,7 @@
 #include "JCSDlg.h"
 #include "afxdialogex.h"
 #include "adDlg.h"
+#include "StrudentDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -179,8 +180,8 @@ void CJCSDlg::logIn()
 	//to->Create(IDD_DIALOG1, this);//第一个参数为打开窗口的ID号
 	//to->ShowWindow(SW_SHOW);
 
-	//adDlg *ad = new adDlg();
-	//ad->Create(IDD_DIALOG1, this);
+	//StrudentDlg *ad = new StrudentDlg();
+	//ad->Create(IDD_DIALOG2, this);
 	//ad->ShowWindow(SW_SHOW);
 	
 	//char *name = "abc";

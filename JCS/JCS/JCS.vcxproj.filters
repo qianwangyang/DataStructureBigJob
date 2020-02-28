@@ -51,6 +51,9 @@
     <ClInclude Include="homework.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="StudiesDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
     <ClInclude Include="StrudentDlg.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -78,6 +81,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="homework.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="StudiesDlg.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="StrudentDlg.cpp">
