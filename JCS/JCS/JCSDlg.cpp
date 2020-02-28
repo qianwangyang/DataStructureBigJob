@@ -6,6 +6,7 @@
 #include "JCS.h"
 #include "JCSDlg.h"
 #include "afxdialogex.h"
+#include "adDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -173,26 +174,34 @@ HCURSOR CJCSDlg::OnQueryDragIcon()
 void CJCSDlg::logIn()
 {
 	// TODO:  在此添加控件通知处理程序代码
+
+	//tow *to = new tow;
+	//to->Create(IDD_DIALOG1, this);//第一个参数为打开窗口的ID号
+	//to->ShowWindow(SW_SHOW);
+
+	//adDlg *ad = new adDlg();
+	//ad->Create(IDD_DIALOG1, this);
+	//ad->ShowWindow(SW_SHOW);
 	
-	char *name = "abc";
-	CString str(name);
-	//CString csr = NULL;
-	MessageBox(str);
-	switch (m_radio)
-	{
-	case 0 :
-		MessageBox("未选择身份");
-		break;
-	case 1 :
-		MessageBox("1");
-		break;
-	case 2 :
-		MessageBox("2");
-		break;
-	case 3:
-		MessageBox("3");
-		break;
-	}
+	//char *name = "abc";
+	//CString str(name);
+	////CString csr = NULL;
+	//MessageBox(str);
+	//switch (m_radio)
+	//{
+	//case 0 :
+	//	MessageBox("未选择身份");
+	//	break;
+	//case 1 :
+	//	MessageBox("1");
+	//	break;
+	//case 2 :
+	//	MessageBox("2");
+	//	break;
+	//case 3:
+	//	MessageBox("3");
+	//	break;
+	//}
 }
 
 
