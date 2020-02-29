@@ -9,6 +9,7 @@
 #include "adDlg.h"
 #include "StrudentDlg.h"
 #include "StudiesDlg.h"
+#include "person.h"
 
 
 #ifdef _DEBUG
@@ -177,7 +178,7 @@ HCURSOR CJCSDlg::OnQueryDragIcon()
 void CJCSDlg::logIn()
 {
 	// TODO:  在此添加控件通知处理程序代码
-
+	UpdateData(true);
 	//tow *to = new tow;
 	//to->Create(IDD_DIALOG1, this);//第一个参数为打开窗口的ID号
 	//to->ShowWindow(SW_SHOW);
@@ -186,17 +187,31 @@ void CJCSDlg::logIn()
 	//ad->Create(IDD_DIALOG3, this);
 	//ad->ShowWindow(SW_SHOW);
 	
-	char *name = "abc";
-	CString str(name);
+	//char *name = "abc";
+	//CString str(name);
 	//CString csr = NULL;
-	MessageBox(str);
+	//MessageBox(str);
+	Person *person = new Person();
 	switch (m_radio)
 	{
 	case 0 :
 		MessageBox("未选择身份");
 		break;
 	case 1 :
-		MessageBox("1");
+		if (m_ID=="000" && m_ps=="000")
+		{
+			adDlg *ad = new adDlg();
+			ad->Create(IDD_DIALOG1, this);
+			this->ShowWindow(SW_HIDE);
+			ad->ShowWindow(SW_SHOW);
+		}
+		else
+		{
+			MessageBox("账号或密码错误");
+		}
+
+
+	
 		break;
 	case 2 :
 		MessageBox("2");
@@ -205,6 +220,7 @@ void CJCSDlg::logIn()
 		MessageBox("3");
 		break;
 	}
+	UpdateData(false);
 }
 
 

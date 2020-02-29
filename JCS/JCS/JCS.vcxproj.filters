@@ -33,9 +33,6 @@
     <ClInclude Include="Resource.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="memory.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="student.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -57,6 +54,9 @@
     <ClInclude Include="StrudentDlg.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="classList.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="JCS.cpp">
@@ -74,9 +74,6 @@
     <ClCompile Include="adDlg.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="memory.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Assignmen.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -87,6 +84,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="StrudentDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="classList.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

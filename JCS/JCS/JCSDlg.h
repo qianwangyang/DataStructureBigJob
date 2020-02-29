@@ -36,6 +36,7 @@ public:
 	int m_sc = 0;
 	int m_s = 0;
 	CStatic temp[3];
+	//Person *per;
 	int m_radio = 0;
 	afx_msg void logIn();
 	afx_msg void radioAd();

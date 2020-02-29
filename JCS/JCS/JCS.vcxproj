@@ -101,10 +101,10 @@
   <ItemGroup>
     <ClInclude Include="adDlg.h" />
     <ClInclude Include="Assignmen.h" />
+    <ClInclude Include="classList.h" />
     <ClInclude Include="homework.h" />
     <ClInclude Include="JCS.h" />
     <ClInclude Include="JCSDlg.h" />
-    <ClInclude Include="memory.h" />
     <ClInclude Include="person.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -116,10 +116,10 @@
   <ItemGroup>
     <ClCompile Include="adDlg.cpp" />
     <ClCompile Include="Assignmen.cpp" />
+    <ClCompile Include="classList.cpp" />
     <ClCompile Include="homework.cpp" />
     <ClCompile Include="JCS.cpp" />
     <ClCompile Include="JCSDlg.cpp" />
-    <ClCompile Include="memory.cpp" />
     <ClCompile Include="person.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

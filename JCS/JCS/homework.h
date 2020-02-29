@@ -15,6 +15,8 @@ public :
 	CString remark);
 	Homework();
 
+	static Homework* homework;
+
 	CString getClassName();
 	CString getNum();
 	CString getTime();
@@ -30,6 +32,8 @@ public :
 	void setTime(CString time);
 	void setRemark(CString remark);
 	void setCourse(CString course);
+	int writeHomework(Homework *homework);
+	int readHomework(Homework *homework);
 
 private:
 	CString className;//班名
@@ -39,6 +43,7 @@ private:
 	CString time;//截止时间
 	CString remark;//备注
 	Homework *next;//下一个
+	
 	
 
 };

@@ -11,7 +11,15 @@ class Assignmen
 		CString startTime,
 		CString overTime,
 		CString remark );
+
 		Assignmen();
+
+		//静态指针对象
+		static Assignmen *assignmen;
+		
+		int writeAssignmen(Assignmen *assignmen);//写文件
+		int readAssignmen(Assignmen *assignmen);//读文件
+
 
 	CString getNo();
 	CString getCourse();

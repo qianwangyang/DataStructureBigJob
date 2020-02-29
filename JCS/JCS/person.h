@@ -4,8 +4,15 @@
 class Person
 {
 public :
+	Person();
 	Person(int id,int pw,int status,CString num,Person *next);
 	Person(int id, int pw, int status, CString num);
+
+	static Person *person;
+
+	int writePerson(Person *person);//写文件
+	int readPerson(Person *person);//读文件
+
 	int getPW();
 	int getID();
 	CString getNum();
