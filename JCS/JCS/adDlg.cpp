@@ -55,6 +55,7 @@ void adDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT7, m_pw);
 	DDX_Text(pDX, IDC_EDIT10, m_status);
 	DDX_Control(pDX, IDC_EDIT6, m_searchStudentEdit);
+	DDX_Text(pDX, IDC_EDIT1, m_classNameEdit);
 
 	//ClassList的虚数据
 
@@ -78,14 +79,7 @@ void adDlg::DoDataExchange(CDataExchange* pDX)
 
 	//读ClassList类
 
-	ClassList *read = new ClassList();
-	int a = read->readClassList(read);
-	ClassList::classList = read;
-	if (a == 1)
-	{
-		MessageBox("文件打开失败");
-	}
-
+	ClassList *read = ClassList::classList;
 	while (read->next != NULL)
 	{
 		//MessageBox(read->className);
@@ -126,9 +120,9 @@ void adDlg::DoDataExchange(CDataExchange* pDX)
 
 	//读Person类数据
 
-	Person *readPerson = new Person();
-	readPerson->readPerson(readPerson);
-	Person::person = readPerson;
+	//Person *readPerson = new Person();
+	//readPerson->readPerson(readPerson);
+	//Person::person = readPerson;
 
 	//MessageBox("再次出现");
 	//Person *pe = Person::person;
@@ -139,8 +133,6 @@ void adDlg::DoDataExchange(CDataExchange* pDX)
 	//}
 
 
-
-	DDX_Text(pDX, IDC_EDIT1, m_classNameEdit);
 }
 
 

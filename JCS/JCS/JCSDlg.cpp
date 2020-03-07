@@ -10,6 +10,8 @@
 #include "StrudentDlg.h"
 #include "StudiesDlg.h"
 #include "person.h"
+#include "Course.h"
+#include "classList.h"
 
 
 #ifdef _DEBUG
@@ -119,7 +121,23 @@ BOOL CJCSDlg::OnInitDialog()
 	CFont font;
 	font.CreatePointFont(400, "宋体");
 	temp[0].SetFont(&font);
-	
+
+	//读ClassList类
+
+	ClassList *read = new ClassList();
+	int a = read->readClassList(read);
+	ClassList::classList = read;
+
+	////读Person类数据
+
+	Person *readPerson = new Person();
+	readPerson->readPerson(readPerson);
+	Person::person = readPerson;
+
+	//读Course数据
+	Course *course = new Course();
+	course->readCourse(course);
+	Course::course = course;
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -178,53 +196,78 @@ HCURSOR CJCSDlg::OnQueryDragIcon()
 void CJCSDlg::logIn()
 {
 	// TODO:  在此添加控件通知处理程序代码
-	UpdateData(true);
-	//tow *to = new tow;
-	//to->Create(IDD_DIALOG1, this);//第一个参数为打开窗口的ID号
-	//to->ShowWindow(SW_SHOW);
+	CString pw;
+	CString num;
+	Person *per = Person::person;
+	int judge = 1;
+	GetDlgItem(IDC_EDIT1)->GetWindowTextA(num);
+	GetDlgItem(IDC_EDIT2)->GetWindowTextA(pw);
 
-	//StudiesDlg *ad = new StudiesDlg();
-	//ad->Create(IDD_DIALOG3, this);
-	//ad->ShowWindow(SW_SHOW);
-	
-	//char *name = "abc";
-	//CString str(name);
-	//CString csr = NULL;
-	//MessageBox(str);
-	Person *person = new Person();
-	adDlg *ad = new adDlg();
-	ad->Create(IDD_DIALOG1, this);
-	this->ShowWindow(SW_HIDE);
-	ad->ShowWindow(SW_SHOW);
+	StudiesDlg *studies = new StudiesDlg();
+	studies->Create(IDD_DIALOG3, this);
+	studies->ShowWindow(SW_SHOW);
+
 	//switch (m_radio)
 	//{
-	//case 0 :
-	//	MessageBox("未选择身份");
+	//case 0:
+	//	MessageBox("请选择身份！");
 	//	break;
-	//case 1 :
-	//	if (m_ID=="000" && m_ps=="000")
+	//case 1:
+	//	if (pw == "000" && num == "000")
 	//	{
 	//		adDlg *ad = new adDlg();
 	//		ad->Create(IDD_DIALOG1, this);
-	//		this->ShowWindow(SW_HIDE);
 	//		ad->ShowWindow(SW_SHOW);
 	//	}
 	//	else
 	//	{
-	//		MessageBox("账号或密码错误");
+	//		MessageBox("输入有误！");
 	//	}
-
-
-	//
 	//	break;
-	//case 2 :
-	//	MessageBox("2");
+	//case 2:
+	//	judge = 1;
+	//	per = Person::person;
+	//	while (per->next != NULL)
+	//	{
+	//		if (per->num == num && per->pw == pw && per->status == "学委")
+	//		{
+	//			StudiesDlg *studies = new StudiesDlg();
+	//			studies->Create(IDD_DIALOG3, this);
+	//			studies->ShowWindow(SW_SHOW);
+	//			judge = 0;
+	//			break;
+	//		}
+	//		per = per->next;
+	//	}
+	//	if (judge)
+	//	{
+	//		MessageBox("输入有误!");
+	//	}
 	//	break;
-	//case 3:
-	//	MessageBox("3");
+	//case 3 :
+	//	judge = 1;
+	//	per = Person::person;
+	//	while (per->next != NULL)
+	//	{
+	//		if (per->num == num && per->pw == pw && per->status == "学生")
+	//		{
+	//			StrudentDlg *student = new StrudentDlg();
+	//			student->Create(IDD_DIALOG2, this);
+	//			student->ShowWindow(SW_SHOW);
+	//			judge = 0;
+	//			break;
+	//		}
+	//		per = per->next;
+	//	}
+	//	if (judge)
+	//	{
+	//		MessageBox("输入有误！");
+	//	}
 	//	break;
 	//}
-	//UpdateData(false);
+	//
+
+
 }
 
 

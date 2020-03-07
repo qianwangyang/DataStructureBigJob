@@ -1,13 +1,17 @@
-﻿生成启动时间为 2020/3/7 11:12:59。
+﻿生成启动时间为 2020/3/7 21:41:09。
      1>项目“D:\课件\数据结构\数据结构大作业\JCS\JCS\JCS.vcxproj”在节点 2 上(Build 个目标)。
      1>ClCompile:
-         E:\Program Files\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\JCS.pch" /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt adDlg.cpp
-         adDlg.cpp
+         E:\Program Files\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\JCS.pch" /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt JCSDlg.cpp StudiesDlg.cpp
+         StudiesDlg.cpp
+         正在生成代码...
+         正在跳过...(未检测到相关更改)
+         JCSDlg.cpp
        Link:
          E:\Program Files\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\课件\数据结构\数据结构大作业\JCS\Debug\JCS.exe" /INCREMENTAL /NOLOGO /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /manifestinput:"E:\Program Files\Microsoft Visual Studio 12.0\VC\Include\Manifest\dpiaware.manifest" /DEBUG /PDB:"D:\课件\数据结构\数据结构大作业\JCS\Debug\JCS.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\课件\数据结构\数据结构大作业\JCS\Debug\JCS.lib" /MACHINE:X86 Debug\JCS.res
          Debug\adDlg.obj
          Debug\Assignmen.obj
          Debug\classList.obj
+         Debug\Course.obj
          Debug\homework.obj
          Debug\JCS.obj
          Debug\JCSDlg.obj
@@ -20,4 +24,4 @@
 
 生成成功。
 
-已用时间 00:00:01.20
+已用时间 00:00:00.89
