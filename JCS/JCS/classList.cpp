@@ -4,49 +4,76 @@
 
 ClassList::ClassList()
 {
-
+	next = NULL; 
 }
 
 ClassList *ClassList::classList = NULL;
 
 //写文件
-int ClassList::writeClassList(ClassList *classList)//有头节点
+int ClassList::writeClassList(ClassList *classList)
 {
 	FILE *fp;
-	if ((fp = fopen("classList", "wb")) == NULL)
+	if ((fp = fopen("classList", "w")) == NULL)
 	{
 		return 1;
 	}
-	while (classList->getNext() != NULL)
+	CString cstr(" ");
+	while (classList != NULL)
 	{
-		classList = classList->getNext();
-		if (fwrite(classList, sizeof(ClassList), 1, fp) != 1)
+		fprintf(fp, classList->className);
+		classList = classList->next;
+		if (classList == NULL)
 		{
-			return 2;
+			break;
 		}
+		fprintf(fp, cstr);
+		
 	}
+	fflush(fp);
 	fclose(fp);
 	return 0;
 }
 
-//读文件
-int ClassList::readClassList(ClassList *classList)//带头指针
+ClassList*  ClassList::xxx()
 {
+	ClassList *xx = new ClassList();
+//	xx->setClassName("4444");
+	return xx;
+}
+
+//读文件
+ int ClassList::readClassList(ClassList *head)
+{
+	
+
+
 	FILE *fp;
-	if ((fp = fopen("classList", "rb")) == NULL)
+	CString str;
+	if ((fp = fopen("classList", "r+")) == NULL)
 	{
 		return 1;
 	}
-	while (!feof(fp))
+	
+	char buf;
+	int status = 0;
+	status = fread(&buf, sizeof(char), 1, fp);
+	str.Format("%c", buf);
+	head->className += str;
+	while (status > 0)
 	{
-		ClassList *next = new ClassList();
-		classList->setNext(next);
-		classList = next;
-		fread(classList, sizeof(ClassList), 1, fp);
-
+		status = fread(&buf, sizeof(char), 1, fp);
+		str.Format("%c", buf);
+		if (str == " " && status > 0)
+		{
+			head->next = new ClassList();
+			head = head->next;
+			head->next = NULL;
+		}
+		if (status > 0 && str != " " )
+		{
+			head->className += str;
+		}
 	}
-	classList->setNext(NULL); 
-	rewind(fp);
 	fclose(fp);
 	return 0;
 }

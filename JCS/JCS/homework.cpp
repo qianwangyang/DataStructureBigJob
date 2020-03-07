@@ -17,7 +17,7 @@ Homework::Homework(CString className,
 }
 Homework::Homework()
 {
-	//homework = NULL;
+	next = NULL;
 }
 Homework *Homework::homework = NULL;
 //╤ап╢нд╪Ч

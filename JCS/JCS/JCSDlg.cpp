@@ -192,35 +192,39 @@ void CJCSDlg::logIn()
 	//CString csr = NULL;
 	//MessageBox(str);
 	Person *person = new Person();
-	switch (m_radio)
-	{
-	case 0 :
-		MessageBox("Î´Ñ¡ÔñÉí·İ");
-		break;
-	case 1 :
-		if (m_ID=="000" && m_ps=="000")
-		{
-			adDlg *ad = new adDlg();
-			ad->Create(IDD_DIALOG1, this);
-			this->ShowWindow(SW_HIDE);
-			ad->ShowWindow(SW_SHOW);
-		}
-		else
-		{
-			MessageBox("ÕËºÅ»òÃÜÂë´íÎó");
-		}
+	adDlg *ad = new adDlg();
+	ad->Create(IDD_DIALOG1, this);
+	this->ShowWindow(SW_HIDE);
+	ad->ShowWindow(SW_SHOW);
+	//switch (m_radio)
+	//{
+	//case 0 :
+	//	MessageBox("Î´Ñ¡ÔñÉí·İ");
+	//	break;
+	//case 1 :
+	//	if (m_ID=="000" && m_ps=="000")
+	//	{
+	//		adDlg *ad = new adDlg();
+	//		ad->Create(IDD_DIALOG1, this);
+	//		this->ShowWindow(SW_HIDE);
+	//		ad->ShowWindow(SW_SHOW);
+	//	}
+	//	else
+	//	{
+	//		MessageBox("ÕËºÅ»òÃÜÂë´íÎó");
+	//	}
 
 
-	
-		break;
-	case 2 :
-		MessageBox("2");
-		break;
-	case 3:
-		MessageBox("3");
-		break;
-	}
-	UpdateData(false);
+	//
+	//	break;
+	//case 2 :
+	//	MessageBox("2");
+	//	break;
+	//case 3:
+	//	MessageBox("3");
+	//	break;
+	//}
+	//UpdateData(false);
 }
 
 

@@ -18,7 +18,7 @@ Assignmen::Assignmen(CString No,
 }
 Assignmen::Assignmen()
 {
-	//assignmen = NULL;
+	next = NULL;
 }
 
 Assignmen *Assignmen::assignmen = NULL;
