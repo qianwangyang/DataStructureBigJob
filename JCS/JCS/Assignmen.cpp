@@ -40,6 +40,8 @@ int Assignmen::writeAssignmen(Assignmen *assignmen)//有头节点
 		fprintf(fp, assignmen->overTime);
 		fprintf(fp, cstr);
 		fprintf(fp, assignmen->remark);
+		fprintf(fp, cstr);
+		fprintf(fp, assignmen->className);
 		assignmen = assignmen->next;
 		if (assignmen == NULL)
 		{
@@ -75,7 +77,7 @@ int Assignmen::readAssignmen(Assignmen *assignmen)//带头指针
 		if (status > 0 && str == "@")
 		{
 			judge++;
-			if (judge == 8)
+			if (judge == 9)
 			{
 				assignmen->next = new Assignmen();
 				assignmen = assignmen->next;
@@ -109,6 +111,10 @@ int Assignmen::readAssignmen(Assignmen *assignmen)//带头指针
 		else if (status > 0 && judge == 7)
 		{
 			assignmen->remark += str;
+		}
+		else if (status > 0 && judge == 8)
+		{
+			assignmen->className += str;
 		}
 	}
 

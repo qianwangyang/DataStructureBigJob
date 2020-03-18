@@ -147,9 +147,9 @@ BOOL CJCSDlg::OnInitDialog()
 	Homework::homework = homework;
 
 	//读Assignmen类
-	Assignmen *assignmen = new Assignmen();
-	assignmen->readAssignmen(assignmen);
-	Assignmen::assignmen = assignmen;
+	//Assignmen *assignmen = new Assignmen();
+	//assignmen->readAssignmen(assignmen);
+	//Assignmen::assignmen = assignmen;
 
 	//while (homework != NULL)
 	//{
@@ -177,6 +177,7 @@ BOOL CJCSDlg::OnInitDialog()
 	//as1->startTime = "2020-3-17";
 	//as1->overTime = "2020-3-20";
 	//as1->remark = "记得交";
+	//as1->className = "计科一班";
 	//as1->next = as2;
 
 	//as2->No = "002";
@@ -186,6 +187,7 @@ BOOL CJCSDlg::OnInitDialog()
 	//as2->startTime = "2020-3-17";
 	//as2->overTime = "2020-3-20";
 	//as2->remark = "记得交";
+	//as2->className = "计科一班";
 	//as2->next = as3;
 
 	//as3->No = "003";
@@ -195,6 +197,7 @@ BOOL CJCSDlg::OnInitDialog()
 	//as3->startTime = "2020-3-17";
 	//as3->overTime = "2020-3-20";
 	//as3->remark = "记得交";
+	//as1->className = "计科一班";
 	//as3->next = NULL;
 
 	//as1->writeAssignmen(as1);

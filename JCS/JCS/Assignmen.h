@@ -15,6 +15,8 @@ class Assignmen
 		CString startTime;//发布时间
 		CString overTime;//截止时间
 		CString remark;//备注
+		CString className;//班级
+
 		Assignmen *next;
 
 		//静态指针对象

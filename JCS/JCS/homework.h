@@ -17,7 +17,7 @@ public :
 	CString name;//学生姓名
 	CString course;//课程名称
 	CString No;//作业编号
-	CString time;//截止时间
+	CString time;//提交时间
 	CString remark;//备注
 	Homework *next;//下一个
 

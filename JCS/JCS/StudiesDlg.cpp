@@ -7,6 +7,8 @@
 #include "Course.h"
 #include "classList.h"
 #include "person.h"
+#include "homework.h"
+#include "Assignmen.h"
 #include "afxdialogex.h"
 
 
@@ -172,13 +174,61 @@ void StudiesDlg::OnSelectStudentOrCourse()
 
 void StudiesDlg::OnSelectStudentOrCourseListBox()
 {
-	// TODO:  在此添加控件通知处理程序代码
+	int index = m_studentOrCourse.GetCurSel();
+	CString str;
+	m_studentOrCourse.GetLBText(index, str);
+
+	CString name;
+	index = m_studentOrCourseListBox.GetCurSel();
+	m_studentOrCourseListBox.GetText(index, name);
+
+	Person *per = Person::who;
+	int judge = 1;
+	m_homeWordContent.ResetContent();
+	if (str == "学生")
+	{
+		Homework *homework = Homework::homework;
+		//Person *person = Person::person;
+		while (homework != NULL)
+		{
+			if (homework->name == name && per->className == homework->className)
+			{
+				m_homeWordContent.AddString(homework->className + " " + homework->num 
+					+ " " + homework->name + " " + homework->course + " " 
+					+ homework->No + " " + homework->time + " " + homework->remark);
+				judge = 0;
+			}
+			homework = homework->next;
+		}
+	}
+	else
+	{
+		Assignmen *assignmen = Assignmen::assignmen;
+		while (assignmen != NULL)
+		{
+			if (assignmen->course == name && per->className == assignmen->className)
+			{
+				m_homeWordContent.AddString(assignmen->No + " " + assignmen->course 
+					+ " " + assignmen->contet + " " + assignmen->time + " " 
+					+ assignmen->startTime + " " + assignmen->overTime + " " 
+					+ assignmen->remark);
+				judge = 0;
+			}
+			assignmen = assignmen->next;
+		}
+	}
+	if (judge)
+	{
+		MessageBox("未有记录！");
+	}
 }
 
 
 void StudiesDlg::OnSelectHomeWordContent()
 {
-	// TODO:  在此添加控件通知处理程序代码
+	int index = m_studentOrCourse.GetCurSel();
+	CString str;
+	m_studentOrCourse.GetLBText(index, str);
 }
 
 
