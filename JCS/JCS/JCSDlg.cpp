@@ -12,6 +12,8 @@
 #include "person.h"
 #include "Course.h"
 #include "classList.h"
+#include "Assignmen.h"
+#include "homework.h"
 
 
 #ifdef _DEBUG
@@ -129,15 +131,105 @@ BOOL CJCSDlg::OnInitDialog()
 	ClassList::classList = read;
 
 	////读Person类数据
-
 	Person *readPerson = new Person();
 	readPerson->readPerson(readPerson);
 	Person::person = readPerson;
+	Person::who = readPerson;
 
 	//读Course数据
 	Course *course = new Course();
 	course->readCourse(course);
 	Course::course = course;
+
+	//读homework类数据
+	Homework *homework = new Homework();
+	homework->readHomework(homework);
+	Homework::homework = homework;
+
+	//读Assignmen类
+	Assignmen *assignmen = new Assignmen();
+	assignmen->readAssignmen(assignmen);
+	Assignmen::assignmen = assignmen;
+
+	//while (homework != NULL)
+	//{
+	//	MessageBox(homework->className);
+	//	MessageBox(homework->name);
+	//	MessageBox(homework->remark);
+	//	homework = homework->next;
+	//}
+
+	//while (assignmen != NULL)
+	//{
+	//	MessageBox(assignmen->course);
+	//	MessageBox(assignmen->remark);
+	//	assignmen = assignmen->next;
+	//}
+
+	//Assignmen虚假数据
+	//Assignmen *as1 = new Assignmen();
+	//Assignmen *as2 = new Assignmen();
+	//Assignmen *as3 = new Assignmen();
+	//as1->No = "001";
+	//as1->course = "数据结构";
+	//as1->contet = "作业一";
+	//as1->time = "1";
+	//as1->startTime = "2020-3-17";
+	//as1->overTime = "2020-3-20";
+	//as1->remark = "记得交";
+	//as1->next = as2;
+
+	//as2->No = "002";
+	//as2->course = "高数";
+	//as2->contet = "作业一";
+	//as2->time = "1";
+	//as2->startTime = "2020-3-17";
+	//as2->overTime = "2020-3-20";
+	//as2->remark = "记得交";
+	//as2->next = as3;
+
+	//as3->No = "003";
+	//as3->course = "线性代数";
+	//as3->contet = "作业一";
+	//as3->time = "1";
+	//as3->startTime = "2020-3-17";
+	//as3->overTime = "2020-3-20";
+	//as3->remark = "记得交";
+	//as3->next = NULL;
+
+	//as1->writeAssignmen(as1);
+
+	//homework虚假数据
+	//Homework *ho1 = new Homework();
+	//Homework *ho2 = new Homework();
+	//Homework *ho3 = new Homework();
+
+	//ho1->className = "计科一班";
+	//ho1->num = "1";
+	//ho1->name = "杨千旺";
+	//ho1->course = "数据结构";
+	//ho1->No = "001";
+	//ho1->time = "2020-3-19";
+	//ho1->remark = "已经交";
+
+	//ho2->className = "计科一班";
+	//ho2->num = "3";
+	//ho2->name = "苏新杰";
+	//ho2->course = "高数";
+	//ho2->No = "002";
+	//ho2->time = "2020-3-19";
+	//ho2->remark = "已经交";
+
+	//ho3->className = "计科一班";
+	//ho3->num = "5";
+	//ho3->name = "邹龙生";
+	//ho3->course = "线性代数";
+	//ho3->No = "001";
+	//ho3->time = "2020-3-19";
+	//ho3->remark = "已经交";
+
+	//ho1->writeHomework(ho1);
+
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }

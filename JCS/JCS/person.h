@@ -9,6 +9,7 @@ public :
 	Person(CString pw, CString status, CString num);
 
 	static Person *person;
+	static Person *who;
 
 	CString num;//Ñ§ºÅ
 	CString name;//ĞÕÃû

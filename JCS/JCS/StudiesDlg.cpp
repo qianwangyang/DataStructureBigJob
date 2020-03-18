@@ -6,6 +6,7 @@
 #include "StudiesDlg.h"
 #include "Course.h"
 #include "classList.h"
+#include "person.h"
 #include "afxdialogex.h"
 
 
@@ -17,12 +18,18 @@ StudiesDlg::StudiesDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(StudiesDlg::IDD, pParent)
 	, m_PublishTime(_T(""))
 	, m_SubmitCourse(_T(""))
-	, m_publicCourseNumEdit(_T(""))
+	//, m_publicCourseNumEdit(_T(""))
 	, m_publishCourseNameEdit(_T(""))
 	, m_PublishTimesEdit(_T(""))
 	, m_publishStartTime(_T(""))
 	, m_stopTime(_T(""))
 	, m_publishContent(_T(""))
+	, m_submitNum(_T(""))
+	, m_submitName(_T(""))
+	, m_timeOfSubmit(_T(""))
+	, m_submitNo(_T(""))
+	, m_submitNotes(_T(""))
+	, m_statistics(_T(""))
 {
 
 }
@@ -98,6 +105,12 @@ void StudiesDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT5, m_publishStartTime);
 	DDX_Text(pDX, IDC_EDIT11, m_stopTime);
 	DDX_Text(pDX, IDC_EDIT12, m_publishContent);
+	DDX_Text(pDX, IDC_EDIT10, m_submitNum);
+	DDX_Text(pDX, IDC_EDIT13, m_submitName);
+	DDX_Text(pDX, IDC_EDIT16, m_timeOfSubmit);
+	DDX_Text(pDX, IDC_EDIT15, m_submitNo);
+	DDX_Text(pDX, IDC_EDIT17, m_submitNotes);
+	DDX_Text(pDX, IDC_EDIT18, m_statistics);
 }
 
 
@@ -109,6 +122,14 @@ BEGIN_MESSAGE_MAP(StudiesDlg, CDialogEx)
 	ON_LBN_SELCHANGE(IDC_LIST2, &StudiesDlg::OnSelectHomeWordContent)
 	ON_LBN_SELCHANGE(IDC_LIST4, &StudiesDlg::OnSearchPublish)
 	ON_LBN_SELCHANGE(IDC_LIST3, &StudiesDlg::OnSearchSubmit)
+	ON_BN_CLICKED(IDC_BUTTON3, &StudiesDlg::OnSearchPublishByTime)
+	ON_BN_CLICKED(IDC_BUTTON4, &StudiesDlg::OnSearchPublishByCourse)
+	ON_BN_CLICKED(IDC_BUTTON5, &StudiesDlg::OnSearchSubimtByTime)
+	ON_BN_CLICKED(IDC_BUTTON6, &StudiesDlg::OnSearchSubmitByCourse)
+	ON_BN_CLICKED(IDC_BUTTON7, &StudiesDlg::OnPublishHomework)
+	ON_BN_CLICKED(IDC_BUTTON8, &StudiesDlg::OnRevampHomework)
+	ON_BN_CLICKED(IDC_BUTTON9, &StudiesDlg::OnAddStudentHomework)
+	ON_BN_CLICKED(IDC_BUTTON10, &StudiesDlg::OnRevampStudentHomework)
 END_MESSAGE_MAP()
 
 
@@ -119,7 +140,33 @@ END_MESSAGE_MAP()
 
 void StudiesDlg::OnSelectStudentOrCourse()
 {
-	// TODO:  在此添加控件通知处理程序代码
+	int index = m_studentOrCourse.GetCurSel();
+	CString str;
+	m_studentOrCourse.GetLBText(index, str);
+	m_studentOrCourseListBox.ResetContent();
+	if (str == "课程")
+	{
+		Course *course = Course::course;
+		while (course != NULL)
+		{
+			m_studentOrCourseListBox.AddString(course->courseName);
+			course = course->next;
+		}
+	}
+	else
+	{
+		Person *person = Person::person;
+		Person *who = Person::who;
+		while (person != NULL)
+		{
+			if (person->className == who->className)
+			{
+				m_studentOrCourseListBox.AddString(person->name);
+			}
+			person = person->next;
+		}
+
+	}
 }
 
 
@@ -142,6 +189,54 @@ void StudiesDlg::OnSearchPublish()
 
 
 void StudiesDlg::OnSearchSubmit()
+{
+	// TODO:  在此添加控件通知处理程序代码
+}
+
+
+void StudiesDlg::OnSearchPublishByTime()
+{
+	// TODO:  在此添加控件通知处理程序代码
+}
+
+
+void StudiesDlg::OnSearchPublishByCourse()
+{
+	// TODO:  在此添加控件通知处理程序代码
+}
+
+
+void StudiesDlg::OnSearchSubimtByTime()
+{
+	// TODO:  在此添加控件通知处理程序代码
+}
+
+
+void StudiesDlg::OnSearchSubmitByCourse()
+{
+	// TODO:  在此添加控件通知处理程序代码
+}
+
+
+void StudiesDlg::OnPublishHomework()
+{
+	// TODO:  在此添加控件通知处理程序代码
+}
+
+
+void StudiesDlg::OnRevampHomework()
+{
+	// TODO:  在此添加控件通知处理程序代码
+}
+
+
+void StudiesDlg::OnAddStudentHomework()
+{
+	// TODO:  在此添加控件通知处理程序代码
+}
+
+
+void StudiesDlg::OnRevampStudentHomework()
 {
 	// TODO:  在此添加控件通知处理程序代码
 }

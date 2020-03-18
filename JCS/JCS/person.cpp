@@ -22,6 +22,7 @@ Person::Person(CString pw, CString status, CString num)
 }
 
 Person *Person::person = NULL;
+Person *Person::who = NULL;
 
 int Person::writePerson(Person *person)//有头节点
 {

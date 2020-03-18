@@ -37,7 +37,7 @@ public:
 	// 查询发布的作业
 	CListBox m_SearchPublish;
 	afx_msg void OnSearchPublish();//查询发布作业的ListBox
-	// //查询学生提交的作业
+	//查询学生提交的作业
 	CListBox m_SearchSubmit;
 	afx_msg void OnSearchSubmit();//查询提交作业的ListBox
 	//发布时间范围查询
@@ -60,4 +60,24 @@ public:
 	CString m_stopTime;
 	// 发布作业内容
 	CString m_publishContent;
+	// 添加或更改学生学号
+	CString m_submitNum;
+	// 添加或更改学生姓名
+	CString m_submitName;
+	// 添加或修改学生的提交时间
+	CString m_timeOfSubmit;
+	// 添加或修改学生的作业编号
+	CString m_submitNo;
+	// 添加或修改学生提交的作业备注
+	CString m_submitNotes;
+	// 作业提交情况统计
+	CString m_statistics;
+	afx_msg void OnSearchPublishByTime();//通过时间范围查询发布作业
+	afx_msg void OnSearchPublishByCourse();//通过课程名称查询发布作业
+	afx_msg void OnSearchSubimtByTime();//通过时间范围查找学生提交的作业
+	afx_msg void OnSearchSubmitByCourse();//通过课程名称查找
+	afx_msg void OnPublishHomework();//发布作业
+	afx_msg void OnRevampHomework();//修改发布的作业
+	afx_msg void OnAddStudentHomework();//添加学生提交的作业
+	afx_msg void OnRevampStudentHomework();//修改学生提交的作业
 };
