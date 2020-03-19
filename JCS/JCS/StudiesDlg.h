@@ -80,4 +80,12 @@ public:
 	afx_msg void OnRevampHomework();//修改发布的作业
 	afx_msg void OnAddStudentHomework();//添加学生提交的作业
 	afx_msg void OnRevampStudentHomework();//修改学生提交的作业
+	// 发布作业单选框
+	int m_radioPublish;
+	afx_msg void OnRadioPublish();
+	// 提交作业排序
+	int m_RadioSubimt;
+	afx_msg void OnRadioSubimt();
+
+	int judgeFirst = 1;
 };
