@@ -34,6 +34,10 @@ StudiesDlg::StudiesDlg(CWnd* pParent /*=NULL*/)
 	, m_statistics(_T(""))
 	, m_radioPublish(0)
 	, m_RadioSubimt(0)
+	, m_publishOver(_T(""))
+	, m_subimtOver(_T(""))
+	, m_publishRemark(_T(""))
+	, m_submitCourse(_T(""))
 {
 
 }
@@ -105,10 +109,16 @@ void StudiesDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT18, m_statistics);
 	DDX_Radio(pDX, IDC_RADIO1, m_radioPublish);
 	DDX_Radio(pDX, IDC_RADIO3, m_RadioSubimt);
-
+	DDX_Text(pDX, IDC_EDIT19, m_publishOver);
+	DDX_Text(pDX, IDC_EDIT20, m_subimtOver);
+	DDX_Control(pDX, IDC_COMBO2, m_refer);
 
 	if (judgeFirst)
 	{
+		m_refer.AddString("时间");
+		m_refer.AddString("次数");
+		m_refer.SetCurSel(0);
+
 		m_studentOrCourse.AddString("课程");
 		m_studentOrCourse.AddString("学生");
 		m_studentOrCourse.SetCurSel(0);
@@ -121,6 +131,8 @@ void StudiesDlg::DoDataExchange(CDataExchange* pDX)
 		}
 		judgeFirst = 0;
 	}
+	DDX_Text(pDX, IDC_EDIT6, m_publishRemark);
+	DDX_Text(pDX, IDC_EDIT14, m_submitCourse);
 }
 
 
@@ -203,7 +215,7 @@ void StudiesDlg::OnSelectStudentOrCourseListBox()
 		//Person *person = Person::person;
 		while (homework != NULL)
 		{
-			if (homework->name == name && per->className == homework->className);
+			if (homework->name == name && per->className == homework->className)
 			{
 				m_homeWordContent.AddString(homework->className + " " + homework->num 
 					+ " " + homework->name + " " + " " + homework->No + " " + homework->course
@@ -267,6 +279,12 @@ void StudiesDlg::OnSelectHomeWordContent()
 				MessageBox(homework->className + " " + homework->num
 					+ " " + homework->name + " " + " " + homework->No + " " + homework->course
 					+ " " + homework->time + " " + homework->remark);
+				GetDlgItem(IDC_EDIT10)->SetWindowTextA(homework->num);
+				GetDlgItem(IDC_EDIT13)->SetWindowTextA(homework->name);
+				GetDlgItem(IDC_EDIT16)->SetWindowTextA(homework->time);
+				GetDlgItem(IDC_EDIT15)->SetWindowTextA(homework->No);
+				GetDlgItem(IDC_EDIT17)->SetWindowTextA(homework->remark);
+				GetDlgItem(IDC_EDIT14)->SetWindowTextA(homework->course);
 				break;
 			}
 			homework = homework->next;
@@ -287,6 +305,14 @@ void StudiesDlg::OnSelectHomeWordContent()
 					+ " " + assignmen->contet + " " + assignmen->time + " "
 					+ assignmen->startTime + " " + assignmen->overTime + " "
 					+ assignmen->remark);
+
+				GetDlgItem(IDC_EDIT8)->SetWindowTextA(assignmen->No);
+				GetDlgItem(IDC_EDIT9)->SetWindowTextA(assignmen->course);
+				GetDlgItem(IDC_EDIT7)->SetWindowTextA(assignmen->time);
+				GetDlgItem(IDC_EDIT5)->SetWindowTextA(assignmen->startTime);
+				GetDlgItem(IDC_EDIT11)->SetWindowTextA(assignmen->overTime);
+				GetDlgItem(IDC_EDIT6)->SetWindowTextA(assignmen->remark);
+				GetDlgItem(IDC_EDIT12)->SetWindowTextA(assignmen->contet);
 				break;
 
 			}
@@ -310,85 +336,766 @@ void StudiesDlg::OnSearchSubmit()
 
 void StudiesDlg::OnSearchPublishByTime()
 {
-	CString time;
-	GetDlgItem(IDC_EDIT1)->GetWindowText(time);
+	UpdateData(true);
+	CString startTime;
+	CString overTime;
+	GetDlgItem(IDC_EDIT1)->GetWindowText(startTime);
+	GetDlgItem(IDC_EDIT19)->GetWindowText(overTime);
 	Assignmen *assignmen = Assignmen::assignmen;
+	Assignmen *as = new Assignmen();
+	Assignmen *head = as;
+	if (startTime == "" || overTime == "")
+	{
+		MessageBox("关键信息未填写！");
+	}
 	while (assignmen != NULL)
 	{
+		if (assignmen->startTime >= startTime &&assignmen->overTime <= overTime)
+		{
+			*as = *assignmen;//最后一个为空，不可用
+			as->next = new Assignmen();
+			as = as->next;
+		}
+		assignmen = assignmen->next;
+	}
 
+	Assignmen *p = NULL;
+	Assignmen *q = NULL;
+	Assignmen *h = NULL;
+	Assignmen *t = new Assignmen();
+
+	switch (m_radioPublish)
+	{
+	case 0:
+		if (head->next == NULL)
+		{
+			MessageBox("未有记录！");
+			return;
+		}
+		for (p = head; p->next != NULL; p = p->next)
+		{
+			for (q = head; q->next->next != NULL; q = q->next)
+			{
+				if (q->startTime > q->next->startTime)
+				{
+					*t = *q;
+					h = q->next;
+
+					q->No = h->No;
+					q->course = h->course;
+					q->contet = h->contet;
+					q->time = h->time;
+					q->startTime = h->startTime;
+					q->overTime = h->overTime;
+					q->remark = h->remark;
+					q->className = h->className;
+
+					h->No = t->No;
+					h->course = t->course;
+					h->contet = t->contet;
+					h->time = t->time;
+					h->startTime = t->startTime;
+					h->overTime = t->overTime;
+					h->remark = t->remark;
+					h->className = t->className;
+				}
+			}
+		}
+		break;
+	case 1:
+		if (head->next == NULL)
+		{
+			MessageBox("未有记录！");
+			return;
+		}
+		for (p = head; p->next != NULL; p = p->next)
+		{
+			for (q = head; q->next->next != NULL; q = q->next)
+			{
+				if (q->startTime < q->next->startTime)
+				{
+					*t = *q;
+					h = q->next;
+
+					q->No = h->No;
+					q->course = h->course;
+					q->contet = h->contet;
+					q->time = h->time;
+					q->startTime = h->startTime;
+					q->overTime = h->overTime;
+					q->remark = h->remark;
+					q->className = h->className;
+
+					h->No = t->No;
+					h->course = t->course;
+					h->contet = t->contet;
+					h->time = t->time;
+					h->startTime = t->startTime;
+					h->overTime = t->overTime;
+					h->remark = t->remark;
+					h->className = t->className;
+				}
+			}
+		}
+		break;
+	default:
+		break;
 	}
 }
 
 
 void StudiesDlg::OnSearchPublishByCourse()
 {
-	// TODO:  在此添加控件通知处理程序代码
+	UpdateData(true);
+	CString course;
+	GetDlgItem(IDC_EDIT1)->GetWindowText(course);
+	Assignmen *assignmen = Assignmen::assignmen;
+	Assignmen *as = new Assignmen();
+	Assignmen *head = as;
+
+	if (course == "" )
+	{
+		MessageBox("关键信息未填写！");
+	}
+	while (assignmen != NULL)
+	{
+		if (assignmen->course == course)
+		{
+			*as = *assignmen;//最后一个为空，不可用
+			as->next = new Assignmen();
+			as = as->next;
+			as->next = NULL;
+		}
+		assignmen = assignmen->next;
+	}
+
+	if (head->next == NULL)
+	{
+		MessageBox("未有记录！");
+		return;
+	}
+
+	Assignmen *p = NULL;
+	Assignmen *q = NULL;
+	Assignmen *h = NULL;
+	Assignmen *t = new Assignmen();
+
+	switch (m_radioPublish)
+	{
+	case 0:
+		for (p = head; p->next != NULL; p = p->next)
+		{
+			for (q = head; q->next->next != NULL; q = q->next)
+			{
+				if (q->startTime > q->next->startTime)
+				{
+					*t = *q;
+					h = q->next;
+
+					q->No = h->No;
+					q->course = h->course;
+					q->contet = h->contet;
+					q->time = h->time;
+					q->startTime = h->startTime;
+					q->overTime = h->overTime;
+					q->remark = h->remark;
+					q->className = h->className;
+
+					h->No = t->No;
+					h->course = t->course;
+					h->contet = t->contet;
+					h->time = t->time;
+					h->startTime = t->startTime;
+					h->overTime = t->overTime;
+					h->remark = t->remark;
+					h->className = t->className;
+				}
+			}
+		}
+		break;
+	case 1:
+		for (p = head; p->next != NULL; p = p->next)
+		{
+			for (q = head; q->next->next != NULL; q = q->next)
+			{
+				if (q->startTime < q->next->startTime)
+				{
+					*t = *q;
+					h = q->next;
+
+					q->No = h->No;
+					q->course = h->course;
+					q->contet = h->contet;
+					q->time = h->time;
+					q->startTime = h->startTime;
+					q->overTime = h->overTime;
+					q->remark = h->remark;
+					q->className = h->className;
+
+					h->No = t->No;
+					h->course = t->course;
+					h->contet = t->contet;
+					h->time = t->time;
+					h->startTime = t->startTime;
+					h->overTime = t->overTime;
+					h->remark = t->remark;
+					h->className = t->className;
+				}
+			}
+		}
+	default:
+		break;
+	}
 }
 
 
 void StudiesDlg::OnSearchSubimtByTime()
 {
-	// TODO:  在此添加控件通知处理程序代码
+	UpdateData(true);
+	CString startTime;
+	CString overTime;
+	GetDlgItem(IDC_EDIT2)->GetWindowText(startTime);
+	GetDlgItem(IDC_EDIT20)->GetWindowText(overTime);
+	if (startTime == "" || overTime == "")
+	{
+		MessageBox("关键信息未填写！");
+	}
+	Homework *homework = Homework::homework;
+	Homework *ho = new Homework();
+	Homework *head = ho;
+	Homework *t = new Homework();
+	Homework *p = NULL;
+	Homework *q = NULL;
+	Homework *h = NULL;
+
+	while (homework != NULL)
+	{
+		if (homework->time >= startTime && homework->time <= overTime)
+		{
+			*ho = *homework;
+			ho->next = new Homework();
+			ho = ho->next;
+			ho->next = NULL;
+		}
+		homework = homework->next;
+	}
+
+	if (head->next == NULL)
+	{
+		MessageBox("未有记录！");
+		return;
+	}
+
+	int index = m_refer.GetCurSel();
+	CString cstr;
+	m_refer.GetLBText(index, cstr);
+	if (cstr == "时间")
+	{
+		switch (m_RadioSubimt)
+		{
+		case 0:
+			for (p = head; q->next != NULL; p = p->next)
+			{
+				for (q = head; q->next->next != NULL; q = q->next)
+				{
+					if (q->time > q->next->time)
+					{
+						*t = *q;
+						h = q->next;
+						q->className = h->className;
+						q->num = h->num;
+						q->course = h->course;
+						q->No = h->No;
+						q->time = h->time;
+						q->remark = h->remark;
+						q->name = h->name;
+
+						h->className = t->className;
+						h->num = t->num;
+						h->course = t->course;
+						h->No = t->No;
+						h->time = t->time;
+						h->remark = t->remark;
+						h->name = t->name;
+					}
+				}
+			}
+			break;
+		case 1:
+			for (p = head; q->next != NULL; p = p->next)
+			{
+				for (q = head; q->next->next != NULL; q = q->next)
+				{
+					if (q->time < q->next->time)
+					{
+						*t = *q;
+						h = q->next;
+						q->className = h->className;
+						q->num = h->num;
+						q->course = h->course;
+						q->No = h->No;
+						q->time = h->time;
+						q->remark = h->remark;
+						q->name = h->name;
+
+						h->className = t->className;
+						h->num = t->num;
+						h->course = t->course;
+						h->No = t->No;
+						h->time = t->time;
+						h->remark = t->remark;
+						h->name = t->name;
+
+					}
+				}
+			}
+
+			break; 
+		default:
+			break;
+		}
+	}
+	else
+	{
+		switch (m_RadioSubimt)
+		{
+		case 0:
+
+			for (p = head; q->next != NULL; p = p->next)
+			{
+				for (q = head; q->next->next != NULL; q = q->next)
+				{
+					if (q->No > q->next->No)
+					{
+						*t = *q;
+						h = q->next;
+						q->className = h->className;
+						q->num = h->num;
+						q->course = h->course;
+						q->No = h->No;
+						q->time = h->time;
+						q->remark = h->remark;
+						q->name = h->name;
+
+						h->className = t->className;
+						h->num = t->num;
+						h->course = t->course;
+						h->No = t->No;
+						h->time = t->time;
+						h->remark = t->remark;
+						h->name = t->name;
+
+					}
+				}
+			}
+			break;
+		case 1:
+			for (p = head; q->next != NULL; p = p->next)
+			{
+				for (q = head; q->next->next != NULL; q = q->next)
+				{
+					if (q->No < q->next->No)
+					{
+						*t = *q;
+						h = q->next;
+						q->className = h->className;
+						q->num = h->num;
+						q->course = h->course;
+						q->No = h->No;
+						q->time = h->time;
+						q->remark = h->remark;
+						q->name = h->name;
+
+						h->className = t->className;
+						h->num = t->num;
+						h->course = t->course;
+						h->No = t->No;
+						h->time = t->time;
+						h->remark = t->remark;
+						h->name = t->name;
+					}
+				}
+			}
+			break;
+		default:
+			break;
+		}
+	}
 }
 
 
 void StudiesDlg::OnSearchSubmitByCourse()
 {
-	// TODO:  在此添加控件通知处理程序代码
+	UpdateData(true);
+	CString course;
+	GetDlgItem(IDC_EDIT4)->GetWindowText(course);
+	if (course == "")
+	{
+		MessageBox("关键信息未填写！");
+	}
+	Homework *homework = Homework::homework;
+	Homework *ho = new Homework();
+	Homework *head = ho;
+	Homework *t = new Homework();
+	Homework *p = NULL;
+	Homework *q = NULL;
+	Homework *h = NULL;
+
+	while (homework != NULL)
+	{
+		if (homework->course)
+		{
+			*ho = *homework;
+			ho->next = new Homework();
+			ho = ho->next;
+			ho->next = NULL;
+		}
+		homework = homework->next;
+	}
+
+	if (head->next == NULL)
+	{
+		MessageBox("未有记录！");
+		return;
+	}
+
+	int index = m_refer.GetCurSel();
+	CString cstr;
+	m_refer.GetLBText(index, cstr);
+	if (cstr == "时间")
+	{
+		switch (m_RadioSubimt)
+		{
+		case 0:
+			for (p = head; q->next != NULL; p = p->next)
+			{
+				for (q = head; q->next->next != NULL; q = q->next)
+				{
+					if (q->time > q->next->time)
+					{
+						*t = *q;
+						h = q->next;
+						q->className = h->className;
+						q->num = h->num;
+						q->course = h->course;
+						q->No = h->No;
+						q->time = h->time;
+						q->remark = h->remark;
+						q->name = h->name;
+
+						h->className = t->className;
+						h->num = t->num;
+						h->course = t->course;
+						h->No = t->No;
+						h->time = t->time;
+						h->remark = t->remark;
+						h->name = t->name;
+					}
+				}
+			}
+			break;
+		case 1:
+			for (p = head; q->next != NULL; p = p->next)
+			{
+				for (q = head; q->next->next != NULL; q = q->next)
+				{
+					if (q->time < q->next->time)
+					{
+						*t = *q;
+						h = q->next;
+						q->className = h->className;
+						q->num = h->num;
+						q->course = h->course;
+						q->No = h->No;
+						q->time = h->time;
+						q->remark = h->remark;
+						q->name = h->name;
+
+						h->className = t->className;
+						h->num = t->num;
+						h->course = t->course;
+						h->No = t->No;
+						h->time = t->time;
+						h->remark = t->remark;
+						h->name = t->name;
+
+					}
+				}
+			}
+
+			break;
+		default:
+			break;
+		}
+	}
+	else
+	{
+		switch (m_RadioSubimt)
+		{
+		case 0:
+
+			for (p = head; q->next != NULL; p = p->next)
+			{
+				for (q = head; q->next->next != NULL; q = q->next)
+				{
+					if (q->No > q->next->No)
+					{
+						*t = *q;
+						h = q->next;
+						q->className = h->className;
+						q->num = h->num;
+						q->course = h->course;
+						q->No = h->No;
+						q->time = h->time;
+						q->remark = h->remark;
+						q->name = h->name;
+
+						h->className = t->className;
+						h->num = t->num;
+						h->course = t->course;
+						h->No = t->No;
+						h->time = t->time;
+						h->remark = t->remark;
+						h->name = t->name;
+
+					}
+				}
+			}
+			break;
+		case 1:
+			for (p = head; q->next != NULL; p = p->next)
+			{
+				for (q = head; q->next->next != NULL; q = q->next)
+				{
+					if (q->No < q->next->No)
+					{
+						*t = *q;
+						h = q->next;
+						q->className = h->className;
+						q->num = h->num;
+						q->course = h->course;
+						q->No = h->No;
+						q->time = h->time;
+						q->remark = h->remark;
+						q->name = h->name;
+
+						h->className = t->className;
+						h->num = t->num;
+						h->course = t->course;
+						h->No = t->No;
+						h->time = t->time;
+						h->remark = t->remark;
+						h->name = t->name;
+					}
+				}
+			}
+			break;
+		default:
+			break;
+		}
+	}
 }
 
 
 void StudiesDlg::OnPublishHomework()
 {
-	// TODO:  在此添加控件通知处理程序代码
+	CString No;//作业编号
+	CString course;//课程名称
+	CString contet;//作业内容
+	CString time;//作业次数
+	CString startTime;//发布时间
+	CString overTime;//截止时间
+	CString remark;//备注
+	GetDlgItem(IDC_EDIT8)->GetWindowText(No);
+	GetDlgItem(IDC_EDIT9)->GetWindowText(course);
+	GetDlgItem(IDC_EDIT7)->GetWindowText(time);
+	GetDlgItem(IDC_EDIT5)->GetWindowText(startTime);
+	GetDlgItem(IDC_EDIT11)->GetWindowText(overTime);
+	GetDlgItem(IDC_EDIT12)->GetWindowText(contet);
+	GetDlgItem(IDC_EDIT6)->GetWindowText(remark);
+
+	if (time == "" || No == "" || course == "" || startTime == "" || overTime == "" || contet == "" ||remark == "")
+	{
+		MessageBox("请完善信息");
+	}
+	Assignmen *as = Assignmen::assignmen;
+	while (as != NULL)
+	{
+		if (as->No == No)
+		{
+			MessageBox("作业编号已经使用，请重新填写！");
+			return;
+		}
+	}
+	as = Assignmen::assignmen;
+	Assignmen *as1 = new Assignmen();
+	Person *per = Person::who;
+
+	as1->className = per->className;
+	as1->contet = contet;
+	as1->course = course;
+	as1->time = time;
+	as1->startTime = startTime;
+	as1->overTime = overTime;
+	as1->remark = remark;
+	as1->No = No;
+
+	as1->next = as->next;
+	as->next = as1;
+	as->writeAssignmen(as);
+	Assignmen::assignmen = as;
+	MessageBox("添加成功！");
 }
 
 
 void StudiesDlg::OnRevampHomework()
 {
-	// TODO:  在此添加控件通知处理程序代码
+	CString No;//作业编号
+	CString course;//课程名称
+	CString contet;//作业内容
+	CString time;//作业次数
+	CString startTime;//发布时间
+	CString overTime;//截止时间
+	CString remark;//备注
+	GetDlgItem(IDC_EDIT8)->GetWindowText(No);
+	GetDlgItem(IDC_EDIT9)->GetWindowText(course);
+	GetDlgItem(IDC_EDIT7)->GetWindowText(time);
+	GetDlgItem(IDC_EDIT5)->GetWindowText(startTime);
+	GetDlgItem(IDC_EDIT11)->GetWindowText(overTime);
+	GetDlgItem(IDC_EDIT12)->GetWindowText(contet);
+	GetDlgItem(IDC_EDIT6)->GetWindowText(remark);
+
+	if (time == "" || No == "" || course == "" || startTime == "" || overTime == "" || contet == "" || remark == "")
+	{
+		MessageBox("请完善信息");
+	}
+	Assignmen *as = Assignmen::assignmen;
+	while (as != NULL)
+	{
+		if (as->No == No)
+		{
+			as->contet = contet;
+			as->course = course;
+			as->time = time;
+			as->startTime = startTime;
+			as->overTime = overTime;
+			as->remark = remark;
+			as = Assignmen::assignmen;
+			as->writeAssignmen(as);
+			MessageBox("修改成功");
+			return;
+		}
+		as = as->next;
+	}
+	MessageBox("修改失败");
 }
 
 
 void StudiesDlg::OnAddStudentHomework()
 {
-	// TODO:  在此添加控件通知处理程序代码
+	CString className;//班名
+	CString num;//学号
+	CString name;//学生姓名
+	CString course;//课程名称
+	CString No;//作业编号
+	CString time;//提交时间
+	CString remark;//备注
+
+	GetDlgItem(IDC_EDIT10)->GetWindowText(num);
+	GetDlgItem(IDC_EDIT13)->GetWindowText(name);
+	GetDlgItem(IDC_EDIT16)->GetWindowText(time);
+	GetDlgItem(IDC_EDIT15)->GetWindowText(No);
+	GetDlgItem(IDC_EDIT17)->GetWindowText(remark);
+	GetDlgItem(IDC_EDIT14)->GetWindowText(course);
+
+	Homework *ho = Homework::homework;
+
+	Homework *ho1 = new Homework();
+	Person *per = Person::who;
+
+	ho1->className = per->className;
+	ho1->num = num;
+	ho1->name = name;
+	ho1->course = course;
+	ho1->No = No;
+	ho1->time = time;
+	ho1->remark = remark;
+
+	ho->next = ho1->next;
+	ho->next = ho1;
+	ho->writeHomework(ho);
+	Homework::homework = ho;
+	MessageBox("添加成功！");
+	
 }
 
 
 void StudiesDlg::OnRevampStudentHomework()
 {
-	// TODO:  在此添加控件通知处理程序代码
+	CString className;//班名
+	CString num;//学号
+	CString name;//学生姓名
+	CString course;//课程名称
+	CString No;//作业编号
+	CString time;//提交时间
+	CString remark;//备注
+
+	GetDlgItem(IDC_EDIT10)->GetWindowText(num);
+	GetDlgItem(IDC_EDIT13)->GetWindowText(name);
+	GetDlgItem(IDC_EDIT16)->GetWindowText(time);
+	GetDlgItem(IDC_EDIT15)->GetWindowText(No);
+	GetDlgItem(IDC_EDIT17)->GetWindowText(remark);
+	GetDlgItem(IDC_EDIT14)->GetWindowText(course);
+
+	Homework *ho = Homework::homework;
+	Person *per = Person::who;
+
+	while (ho != NULL)
+	{
+		if (ho->num == num && ho->No == No)
+		{
+			ho->name = name;
+			ho->course = course;
+			ho->time = time;
+			ho->remark = remark;
+			ho = Homework::homework;
+			ho->writeHomework(ho);
+			MessageBox("修改成功！");
+			return;
+		}
+		ho = ho->next;
+	}
+	MessageBox("修改失败！");
 }
 
 
 void StudiesDlg::OnRadioPublish()
 {
-	UpdateData(true);
-	switch (m_radioPublish)
-	{
-	case 0:
-		MessageBox("升");
-		break;
-	case 1:
-		MessageBox("降");
-	default:
-		break;
-	}
+	//UpdateData(true);
+	//switch (m_radioPublish)
+	//{
+	//case 0:
+	//	MessageBox("升");
+	//	break;
+	//case 1:
+	//	MessageBox("降");
+	//default:
+	//	break;
+	//}
 }
 
 
 void StudiesDlg::OnRadioSubimt()
 {
-	UpdateData(true);
-	switch (m_RadioSubimt)
-	{
-	case 0:
-		MessageBox("升");
-		break;
-	case 1:
-		MessageBox("降");
-	default:
-		break;
-	}
+	//UpdateData(true);
+	//switch (m_RadioSubimt)
+	//{
+	//case 0:
+	//	MessageBox("升");
+	//	break;
+	//case 1:
+	//	MessageBox("降");
+	//default:
+	//	break;
+	//}
 }

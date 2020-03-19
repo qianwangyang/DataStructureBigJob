@@ -88,4 +88,14 @@ public:
 	afx_msg void OnRadioSubimt();
 
 	int judgeFirst = 1;
+	// 发布作业查询时间范围下
+	CString m_publishOver;
+	// 学生提交作业时间范围下
+	CString m_subimtOver;
+	// 学生提交作业排序参照
+	CComboBox m_refer;
+	// 发布作业的备注
+	CString m_publishRemark;
+	// 学生提交作业的科目
+	CString m_submitCourse;
 };
