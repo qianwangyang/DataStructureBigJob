@@ -224,7 +224,6 @@ void adDlg::OnDeleteClass()
 		return;
 	}
 	m_clasListBox.GetText(index, className);
-	m_clasListBox.DeleteString(index);
 	ClassList *cl = ClassList::classList;
 	ClassList *copy;
 	copy = cl;
@@ -232,17 +231,33 @@ void adDlg::OnDeleteClass()
 	{
 		if (cl->className == className)
 		{
-			copy->next = cl->next;
+			if (copy != cl)
+			{
+				copy->next = cl->next;
 
-			delete cl;//释放删掉的空间
+				delete cl;//释放删掉的空间
 
-			cl = ClassList::classList;
-			cl->writeClassList(cl);
-			return;
+				cl = ClassList::classList;
+				cl->writeClassList(cl);
+				m_clasListBox.DeleteString(index);
+				MessageBox("修改成功！");
+				return;
+			}
+			else
+			{
+				cl = cl->next;
+				delete copy;
+				cl->writeClassList(cl);
+				m_clasListBox.DeleteString(index);
+				ClassList::classList = cl;
+				MessageBox("修改成功！");
+				return;
+			}
 		}
 		copy = cl;
 		cl = cl->next;
 	}
+	MessageBox("修改失败！");
 }
 
 
@@ -270,20 +285,34 @@ void adDlg::OnDeleteStudent()
 	{
 		if (per->num == num)
 		{
-			copy->next = per->next;
+			if (copy == per)
+			{
+				per = per->next;
+				per->writePerson(per);
+				Person::person = per;
+				delete copy;
+				copy = NULL;
+				m_studentListBox.DeleteString(index);
+				MessageBox("学生删除成功！");
+				return;
+			}
+			else
+			{
+				copy->next = per->next;
 
-			delete per;
-			
-			per = Person::person;
-			per->writePerson(per);
-			m_studentListBox.DeleteString(index);
-			MessageBox("学生删除成功");
-			return;
+				delete per;
+
+				per = Person::person;
+				per->writePerson(per);
+				m_studentListBox.DeleteString(index);
+				MessageBox("学生删除成功");
+				return;
+			}
 		}
 		copy = per;
 		per = per->next;
 	}
-
+	MessageBox("学生删除失败！");
 }
 
 

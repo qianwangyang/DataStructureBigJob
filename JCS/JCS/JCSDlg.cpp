@@ -302,65 +302,65 @@ void CJCSDlg::logIn()
 	studies->Create(IDD_DIALOG3, this);
 	studies->ShowWindow(SW_SHOW);
 
-	//switch (m_radio)
-	//{
-	//case 0:
-	//	MessageBox("请选择身份！");
-	//	break;
-	//case 1:
-	//	if (pw == "000" && num == "000")
-	//	{
-	//		adDlg *ad = new adDlg();
-	//		ad->Create(IDD_DIALOG1, this);
-	//		ad->ShowWindow(SW_SHOW);
-	//	}
-	//	else
-	//	{
-	//		MessageBox("输入有误！");
-	//	}
-	//	break;
-	//case 2:
-	//	judge = 1;
-	//	per = Person::person;
-	//	while (per->next != NULL)
-	//	{
-	//		if (per->num == num && per->pw == pw && per->status == "学委")
-	//		{
-	//			StudiesDlg *studies = new StudiesDlg();
-	//			studies->Create(IDD_DIALOG3, this);
-	//			studies->ShowWindow(SW_SHOW);
-	//			judge = 0;
-	//			break;
-	//		}
-	//		per = per->next;
-	//	}
-	//	if (judge)
-	//	{
-	//		MessageBox("输入有误!");
-	//	}
-	//	break;
-	//case 3 :
-	//	judge = 1;
-	//	per = Person::person;
-	//	while (per->next != NULL)
-	//	{
-	//		if (per->num == num && per->pw == pw && per->status == "学生")
-	//		{
-	//			StrudentDlg *student = new StrudentDlg();
-	//			student->Create(IDD_DIALOG2, this);
-	//			student->ShowWindow(SW_SHOW);
-	//			judge = 0;
-	//			break;
-	//		}
-	//		per = per->next;
-	//	}
-	//	if (judge)
-	//	{
-	//		MessageBox("输入有误！");
-	//	}
-	//	break;
-	//}
-	//
+	switch (m_radio)
+	{
+	case 0:
+		MessageBox("请选择身份！");
+		break;
+	case 1:
+		if (pw == "000" && num == "000")
+		{
+			adDlg *ad = new adDlg();
+			ad->Create(IDD_DIALOG1, this);
+			ad->ShowWindow(SW_SHOW);
+		}
+		else
+		{
+			MessageBox("输入有误！");
+		}
+		break;
+	case 2:
+		judge = 1;
+		per = Person::person;
+		while (per->next != NULL)
+		{
+			if (per->num == num && per->pw == pw && per->status == "学委")
+			{
+				StudiesDlg *studies = new StudiesDlg();
+				studies->Create(IDD_DIALOG3, this);
+				studies->ShowWindow(SW_SHOW);
+				judge = 0;
+				break;
+			}
+			per = per->next;
+		}
+		if (judge)
+		{
+			MessageBox("输入有误!");
+		}
+		break;
+	case 3 :
+		judge = 1;
+		per = Person::person;
+		while (per->next != NULL)
+		{
+			if (per->num == num && per->pw == pw && per->status == "学生")
+			{
+				StrudentDlg *student = new StrudentDlg();
+				student->Create(IDD_DIALOG2, this);
+				student->ShowWindow(SW_SHOW);
+				judge = 0;
+				break;
+			}
+			per = per->next;
+		}
+		if (judge)
+		{
+			MessageBox("输入有误！");
+		}
+		break;
+	}
+	
 
 
 }

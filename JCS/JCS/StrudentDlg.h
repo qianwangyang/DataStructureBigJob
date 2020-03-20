@@ -1,4 +1,5 @@
 #pragma once
+#include "afxwin.h"
 
 
 // StrudentDlg 对话框
@@ -18,4 +19,18 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 
 	DECLARE_MESSAGE_MAP()
+public:
+	// 提交情况
+	CListBox m_submitCase;
+	afx_msg void OnSubmitHomework();
+	// 课程名称
+	CString m_course;
+	// 作业编码
+	CString m_No;
+	// 提交时间
+	CString m_time;
+	// 备注
+	CString m_remark;
+	// 作业公告
+	CString m_notice;
 };

@@ -112,6 +112,8 @@ void StudiesDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT19, m_publishOver);
 	DDX_Text(pDX, IDC_EDIT20, m_subimtOver);
 	DDX_Control(pDX, IDC_COMBO2, m_refer);
+	DDX_Text(pDX, IDC_EDIT6, m_publishRemark);
+	DDX_Text(pDX, IDC_EDIT14, m_submitCourse);
 
 	if (judgeFirst)
 	{
@@ -131,8 +133,6 @@ void StudiesDlg::DoDataExchange(CDataExchange* pDX)
 		}
 		judgeFirst = 0;
 	}
-	DDX_Text(pDX, IDC_EDIT6, m_publishRemark);
-	DDX_Text(pDX, IDC_EDIT14, m_submitCourse);
 }
 
 
@@ -156,6 +156,8 @@ BEGIN_MESSAGE_MAP(StudiesDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_RADIO2, &StudiesDlg::OnRadioPublish)
 	ON_BN_CLICKED(IDC_RADIO3, &StudiesDlg::OnRadioSubimt)
 	ON_BN_CLICKED(IDC_RADIO4, &StudiesDlg::OnRadioSubimt)
+	ON_BN_CLICKED(IDC_BUTTON1, &StudiesDlg::OnDeleteStudentOrCourse)
+	ON_BN_CLICKED(IDC_BUTTON2, &StudiesDlg::OnDeleteContent)
 END_MESSAGE_MAP()
 
 
@@ -215,7 +217,7 @@ void StudiesDlg::OnSelectStudentOrCourseListBox()
 		//Person *person = Person::person;
 		while (homework != NULL)
 		{
-			if (homework->name == name && per->className == homework->className)
+			if (homework->name == name && per->className == homework->className);
 			{
 				m_homeWordContent.AddString(homework->className + " " + homework->num 
 					+ " " + homework->name + " " + " " + homework->No + " " + homework->course
@@ -1067,6 +1069,204 @@ void StudiesDlg::OnRevampStudentHomework()
 	}
 	MessageBox("修改失败！");
 }
+
+void StudiesDlg::OnDeleteStudentOrCourse()
+{
+	CString str;
+	int index = m_studentOrCourse.GetCurSel();
+	m_studentOrCourse.GetLBText(index, str);
+
+	CString name;
+	index = m_studentOrCourseListBox.GetCurSel();
+	m_studentOrCourseListBox.GetText(index, name);
+
+	if (str == "学生")
+	{
+		Person *per = Person::person;
+		Person *who = Person::who;
+		Person *t = per;
+		while (per != NULL)
+		{
+			if (per->className == who->className && per->name == name)
+			{
+				if (per == t)
+				{
+					per = per->next;
+					delete t;
+					t = NULL;
+					per->writePerson(per);
+					Person::person = per;
+					m_studentOrCourseListBox.DeleteString(index);
+					MessageBox("删除成功！");
+					return;
+				}
+				else
+				{
+					t->next = per->next;
+					t = Person::person;
+					t->writePerson(t);
+					delete per;
+					m_studentOrCourseListBox.DeleteString(index);
+					MessageBox("删除成功！");
+					return;
+				}
+			}
+			t = per;
+			per = per->next;
+		}
+	}
+	else
+	{
+		Course *co = Course::course;
+		Course *copy = co;
+		while (co != NULL)
+		{
+			if (co->courseName == name)
+			{
+				if (co == copy)
+				{
+					co = co->next;
+					co->writeCourse(co);
+					Course::course = co;
+					delete copy;
+					copy = NULL;
+					m_studentOrCourseListBox.DeleteString(index);
+					MessageBox("删除成功！");
+				}
+				else
+				{
+					copy->next = co->next;
+					co = Course::course;
+					co->writeCourse(co);
+					delete co;
+					co = NULL;
+					m_studentOrCourseListBox.DeleteString(index);
+					MessageBox("删除成功！");
+				}
+			}
+		}
+	}
+	MessageBox("删除成功！");
+}
+
+
+void StudiesDlg::OnDeleteContent()
+{
+	CString str;
+	int index = m_studentOrCourse.GetCurSel();
+	m_studentOrCourse.GetLBText(index, str);
+	
+	CString cstr;
+	index = m_homeWordContent.GetCurSel();
+	m_homeWordContent.GetText(index, cstr);
+
+	if (str == "学生")
+	{
+		Homework *ho = Homework::homework;
+		Homework *copy = ho;
+		Person *per = Person::who;
+
+		CString num, name, course, No, time, remark, className;
+		AfxExtractSubString(className, cstr, 0, ' ');
+		AfxExtractSubString(num, cstr, 1, ' ');
+		AfxExtractSubString(name, cstr, 2, ' ');
+		AfxExtractSubString(No, cstr, 3, ' ');
+		AfxExtractSubString(course, cstr, 4, ' ');
+		AfxExtractSubString(time, cstr, 5, ' ');
+		AfxExtractSubString(remark, cstr, 6, ' ');
+
+		while (ho != NULL)
+		{
+			if (ho->className == per->className && ho->course == course && ho->num == num
+				&& ho->No == No &&ho->time == time && ho->remark == remark && ho->name == name)
+			{
+				if (ho == copy)
+				{
+					ho = ho->next;
+					ho->writeHomework(ho);
+					Homework::homework = ho;
+					delete copy;
+					copy = NULL;
+					m_homeWordContent.DeleteString(index);
+					MessageBox("删除成功！");
+					return;
+				}
+				else
+				{
+					copy->next = ho->next;
+					delete ho;
+					ho = Homework::homework;
+					ho->writeHomework(ho);
+					m_homeWordContent.DeleteString(index);
+					MessageBox("删除成功！");
+					return;
+				}
+			}
+			copy = ho;
+			ho = ho->next;
+		}
+		MessageBox("删除失败！");
+		return;
+	}
+	else
+	{
+		Assignmen *as = Assignmen::assignmen;
+		Assignmen *copy = as;
+		Person *per = Person::who;
+		
+		CString No;//作业编号
+		CString course;//课程名称
+		CString contet;//作业内容
+		CString time;//作业次数
+		CString startTime;//发布时间
+		CString overTime;//截止时间
+		CString remark;//备注
+		CString className;//班级
+
+		AfxExtractSubString(No, cstr, 0, ' ');
+		AfxExtractSubString(course, cstr, 0, ' ');
+		AfxExtractSubString(contet, cstr, 0, ' ');
+		AfxExtractSubString(time, cstr, 0, ' ');
+		AfxExtractSubString(startTime, cstr, 0, ' ');
+		AfxExtractSubString(overTime, cstr, 0, ' ');
+		AfxExtractSubString(remark, cstr, 0, ' ');
+
+		while (as != NULL)
+		{
+			if (per->className == as->className && as->No == No && as->course == course && as->time == time
+				&& as->startTime == startTime && as->overTime == overTime && as->remark == remark)
+			{
+				if (copy == as)
+				{
+					as = as->next;
+					as->writeAssignmen(as);
+					Assignmen::assignmen = as;
+					delete copy;
+					m_homeWordContent.DeleteString(index);
+					MessageBox("删除成功！");
+					return;
+				}
+				else
+				{
+					copy->next = as->next;
+					delete as;
+					as = Assignmen::assignmen;
+					as->writeAssignmen(as);
+					m_homeWordContent.DeleteString(index);
+					MessageBox("删除成功！");
+					return;
+				}
+			}
+			as = as->next;
+		}
+		MessageBox("删除失败！");
+		return;
+
+	}
+
+}
+
+
 
 
 void StudiesDlg::OnRadioPublish()

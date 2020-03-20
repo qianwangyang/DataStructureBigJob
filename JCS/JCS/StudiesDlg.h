@@ -98,4 +98,6 @@ public:
 	CString m_publishRemark;
 	// 学生提交作业的科目
 	CString m_submitCourse;
+	afx_msg void OnDeleteStudentOrCourse();
+	afx_msg void OnDeleteContent();
 };
