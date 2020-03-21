@@ -58,11 +58,11 @@ void StrudentDlg::DoDataExchange(CDataExchange* pDX)
 	{
 		if (as->className == per->className)
 		{
-			content += as->course + " " + as->contet + " " + as->remark + " " + as->startTime + " " + as->overTime + "\r\n";
+			content += as->course + " " + as->No+ " " + as->contet + " " + as->remark + " " + as->startTime + " " + as->overTime + "\r\n";
 		}
 		as = as->next;
 	}
-	m_remark = content;
+	GetDlgItem(IDC_EDIT5)->SetWindowTextA(content);
 }
 
 
@@ -78,7 +78,7 @@ void StrudentDlg::OnSubmitHomework()
 {
 	UpdateData(true);
 	Homework *ho = new Homework();
-	Person *per = Person::person;
+	Person *per = Person::who;
 	if (m_course == "" || m_No == "" || m_time == "" || m_remark == "")
 	{
 		MessageBox("请完善信息！");
@@ -93,9 +93,20 @@ void StrudentDlg::OnSubmitHomework()
 	ho->remark = m_remark;
 
 	Homework *head = Homework::homework;
-	ho->next = head->next;
-	head->next = ho;
-	head->writeHomework(head);
-	Homework::homework = head;
+	if (head->No == "")
+	{
+		head = ho;
+		head->writeHomework(head);
+		Homework::homework = head;
+	}
+	else
+	{
+		ho->next = head->next;
+		head->next = ho;
+		head->writeHomework(head);
+		Homework::homework = head;
+	}
+	m_submitCase.AddString(ho->className + " " + ho->name + " " + ho->course + " " + ho->No + " " + ho->time + " " + ho->remark);
 	MessageBox("提交成功！");
+	UpdateData(false);
 }
