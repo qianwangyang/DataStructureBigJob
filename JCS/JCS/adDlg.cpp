@@ -80,7 +80,7 @@ void adDlg::DoDataExchange(CDataExchange* pDX)
 	//读ClassList类
 
 	ClassList *read = ClassList::classList;
-	while (read->next != NULL)
+	while (read!= NULL)
 	{
 		//MessageBox(read->className);
 		m_clasListBox.AddString(read->className);
@@ -184,7 +184,6 @@ void adDlg::OnLbnSelchangeList3()//学生列表改变函数
 
 void adDlg::OnSelectClassChange()
 {
-	// TODO:  在此添加控件通知处理程序代码
 	//MessageBox("classListBox");
 	int index;
 	CString str;
@@ -193,10 +192,9 @@ void adDlg::OnSelectClassChange()
 
 	index = m_clasListBox.GetCurSel();
 	m_clasListBox.GetText(index, str);
-
 	m_studentListBox.ResetContent();
 
-	while (person->next != NULL)
+	while (person != NULL)
 	{
 		if (person->className == str)
 		{
@@ -321,23 +319,34 @@ void adDlg::OnAddClass()
 	CString className;
 	GetDlgItem(IDC_EDIT5)->GetWindowText(className);
 	ClassList *head = ClassList::classList;
+	while (head->next != NULL)
+	{
+		if (head->className == className)
+		{
+			MessageBox("已存在班级，不可重复！");
+			return;
+		}
+		head = head->next;
+	}
 	ClassList *cl = new ClassList();
 	cl->className = className;
-
+	head = ClassList::classList;
+	if (head == NULL)
+	{
+		head = cl;
+		head->writeClassList(head);
+		ClassList::classList = head;
+		m_clasListBox.AddString(className);
+		MessageBox("添加成功！");
+		return;
+	}
 	cl->next = head->next;
 	head->next = cl;
 
 	m_clasListBox.AddString(className);
 	head->writeClassList(head);
-
-
-	//ClassList *cl1 = ClassList::classList;
-	//while (cl1->next != NULL)
-	//{
-	//	MessageBox(cl1->className);
-	//	cl1 = cl1->next;
-	//}
-
+	MessageBox("添加成功！");
+	return;
 }
 
 
@@ -351,7 +360,7 @@ void adDlg::OnSearchClass()
 
 	ClassList *cl = ClassList::classList;
 	
-	while (cl->next != NULL)
+	while (cl!= NULL)
 	{
 		if (cl->className == className)
 		{
@@ -386,7 +395,7 @@ void adDlg::OnRevampClass()
 
 
 	ClassList *cl = ClassList::classList;
-	while (cl->next != NULL)
+	while (cl!= NULL)
 	{
 		if (cl->className == beforName)
 		{
@@ -399,7 +408,7 @@ void adDlg::OnRevampClass()
 	cl->writeClassList(cl);
 
 	Person *per = Person::person;
-	while (per->next != NULL)
+	while (per != NULL)
 	{
 		if (per->className == beforName)
 		{
@@ -442,7 +451,7 @@ void adDlg::OnAddStudent()
 
 	int judge = 1;
 	ClassList *cl = ClassList::classList;
-	while (cl->next != NULL)
+	while (cl !=  NULL)
 	{
 		if (cl->className == className)
 		{
@@ -459,7 +468,7 @@ void adDlg::OnAddStudent()
 
 	judge = 0;
 	Person *per = Person::person;
-	while (per->next != NULL)
+	while (per != NULL)
 	{
 		if (per->num == num)
 		{
@@ -477,13 +486,37 @@ void adDlg::OnAddStudent()
 	person->num = num;
 	person->name = name;
 	person->className = className;
-	person->pw = pw;
+	person->pw = pw; 
 	person->status = status;
+
+	if (status == "学委")//把其他学委改成学生
+	{
+		per = Person::person;
+		while (per != NULL)
+		{
+			if (per->status == "学委" && per->className == className)
+			{
+				per->status = "学生";
+				break;
+			}
+			per = per->next;
+		}
+	}
 	
 	per = Person::person;
-	person->next = per->next;
-	per->next = person;
-	per->writePerson(per);
+	if (per == NULL)
+	{
+		per = person;
+		per->writePerson(per);
+		Person::person = per;
+	}
+	else
+	{
+		person->next = per->next;
+		per->next = person;
+		per->writePerson(per);
+	}
+	m_studentListBox.AddString(person->num + " " + person->name + " " + person->pw + " " + person->className + " " + person->status);
 	MessageBox("学生添加成功！");
 }
 
@@ -515,22 +548,65 @@ void adDlg::OnRevampStudent()
 	}
 
 	Person *per = Person::person;
-	while (per->next != NULL)
+	int judge = 1;
+	if (status == "学委")
 	{
-		if (per->num == num)
+		while (per != NULL)
 		{
-			per->name = name;
-			per->pw = pw;
-			per->className = className;
-			per->status = status;
+			if (per->num == num)
+			{
+				per->name = name;
+				per->pw = pw;
+				per->className = className;
+				per->status = status;
 
-			per = Person::person;//回到链头
-			per->writePerson(per);
-			MessageBox("修改成功！");
+				per = Person::person;//回到链头
+				per->writePerson(per);
+				MessageBox("修改成功！");
+				judge = 0;
+				break;
+			}
+			per = per->next;
+		}
+		if (judge)
+		{
+			MessageBox("未有学号为" + num + "的学生记录！");
 			return;
 		}
-		per = per->next;
+		per = Person::person;
+		while (per != NULL)
+		{
+			if (per->num != num && per->status == "学委")
+			{
+				per->status = "学生";
+				per = Person::person;
+				per->writePerson(per);
+				return;
+			}
+			per = per->next;
+		}
+		return;
 	}
+	else
+	{
+		while (per != NULL)
+		{
+			if (per->num == num)
+			{
+				per->name = name;
+				per->pw = pw;
+				per->className = className;
+				per->status = status;
+
+				per = Person::person;//回到链头
+				per->writePerson(per);
+				MessageBox("修改成功！");
+				return;
+			}
+			per = per->next;
+		}
+	}
+	
 	MessageBox("未有学号为"+num+"的学生记录！");
 	return;
 	
@@ -545,7 +621,7 @@ void adDlg::OnSearchStudent()
 	GetDlgItem(IDC_EDIT6)->GetWindowText(name);
 	Person *per = Person::person;
 	int judge = 1;
-	while (per->next != NULL)
+	while (per != NULL)
 	{
 		if (per->name == name)
 		{

@@ -24,22 +24,20 @@ public:
 	//CComboBox m_courseOrClass;
 	CComboBox m_studentOrCourse;
 	//选择班级或课程响应函数
-	//afx_msg void OnSelectCourseOrClass();
 	afx_msg void OnSelectStudentOrCourse();
 	// 课程或班级ListBox
-	//CListBox m_courseOrClassListBox;
 	CListBox m_studentOrCourseListBox;
-	//afx_msg void OnSelectClassOrCourseListBox();//课程或班级ListBox
+	//课程或班级ListBox
 	afx_msg void OnSelectStudentOrCourseListBox();
 	//作业内容
 	CListBox m_homeWordContent;
 	afx_msg void OnSelectHomeWordContent();//详细内容
 	// 查询发布的作业
-	CListBox m_SearchPublish;
-	afx_msg void OnSearchPublish();//查询发布作业的ListBox
-	//查询学生提交的作业
-	CListBox m_SearchSubmit;
-	afx_msg void OnSearchSubmit();//查询提交作业的ListBox
+	//CListBox m_SearchPublish;
+	//afx_msg void OnSearchPublish();//查询发布作业的ListBox
+	////查询学生提交的作业
+	//CListBox m_SearchSubmit;
+	//afx_msg void OnSearchSubmit();//查询提交作业的ListBox
 	//发布时间范围查询
 	CString m_PublishTime;
 	//发布作业课程名称查询

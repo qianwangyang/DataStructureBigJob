@@ -1,4 +1,4 @@
-#include "stdafx.h"
+  #include "stdafx.h"
 #include "Assignmen.h"
 #include "afxdialogex.h"
 Assignmen::Assignmen(CString No,CString course,CString contet,CString time,CString startTime,CString overTime,CString remark)

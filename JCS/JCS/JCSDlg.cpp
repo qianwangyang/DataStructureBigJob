@@ -134,7 +134,6 @@ BOOL CJCSDlg::OnInitDialog()
 	Person *readPerson = new Person();
 	readPerson->readPerson(readPerson);
 	Person::person = readPerson;
-	Person::who = readPerson;
 
 	//读Course数据
 	Course *course = new Course();
@@ -146,93 +145,12 @@ BOOL CJCSDlg::OnInitDialog()
 	homework->readHomework(homework);
 	Homework::homework = homework;
 
+
+
 	//读Assignmen类
-	//Assignmen *assignmen = new Assignmen();
-	//assignmen->readAssignmen(assignmen);
-	//Assignmen::assignmen = assignmen;
-
-	//while (homework != NULL)
-	//{
-	//	MessageBox(homework->className);
-	//	MessageBox(homework->name);
-	//	MessageBox(homework->remark);
-	//	homework = homework->next;
-	//}
-
-	//while (assignmen != NULL)
-	//{
-	//	MessageBox(assignmen->course);
-	//	MessageBox(assignmen->remark);
-	//	assignmen = assignmen->next;
-	//}
-
-	//Assignmen虚假数据
-	//Assignmen *as1 = new Assignmen();
-	//Assignmen *as2 = new Assignmen();
-	//Assignmen *as3 = new Assignmen();
-	//as1->No = "001";
-	//as1->course = "数据结构";
-	//as1->contet = "作业一";
-	//as1->time = "1";
-	//as1->startTime = "2020-3-17";
-	//as1->overTime = "2020-3-20";
-	//as1->remark = "记得交";
-	//as1->className = "计科一班";
-	//as1->next = as2;
-
-	//as2->No = "002";
-	//as2->course = "高数";
-	//as2->contet = "作业一";
-	//as2->time = "1";
-	//as2->startTime = "2020-3-17";
-	//as2->overTime = "2020-3-20";
-	//as2->remark = "记得交";
-	//as2->className = "计科一班";
-	//as2->next = as3;
-
-	//as3->No = "003";
-	//as3->course = "线性代数";
-	//as3->contet = "作业一";
-	//as3->time = "1";
-	//as3->startTime = "2020-3-17";
-	//as3->overTime = "2020-3-20";
-	//as3->remark = "记得交";
-	//as1->className = "计科一班";
-	//as3->next = NULL;
-
-	//as1->writeAssignmen(as1);
-
-	//homework虚假数据
-	//Homework *ho1 = new Homework();
-	//Homework *ho2 = new Homework();
-	//Homework *ho3 = new Homework();
-
-	//ho1->className = "计科一班";
-	//ho1->num = "1";
-	//ho1->name = "杨千旺";
-	//ho1->course = "数据结构";
-	//ho1->No = "001";
-	//ho1->time = "2020-3-19";
-	//ho1->remark = "已经交";
-
-	//ho2->className = "计科一班";
-	//ho2->num = "3";
-	//ho2->name = "苏新杰";
-	//ho2->course = "高数";
-	//ho2->No = "002";
-	//ho2->time = "2020-3-19";
-	//ho2->remark = "已经交";
-
-	//ho3->className = "计科一班";
-	//ho3->num = "5";
-	//ho3->name = "邹龙生";
-	//ho3->course = "线性代数";
-	//ho3->No = "001";
-	//ho3->time = "2020-3-19";
-	//ho3->remark = "已经交";
-
-	//ho1->writeHomework(ho1);
-
+	Assignmen *assignmen = new Assignmen();
+	assignmen->readAssignmen(assignmen);
+	Assignmen::assignmen = assignmen;
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -290,7 +208,6 @@ HCURSOR CJCSDlg::OnQueryDragIcon()
 
 void CJCSDlg::logIn()
 {
-	// TODO:  在此添加控件通知处理程序代码
 	CString pw;
 	CString num;
 	Person *per = Person::person;
@@ -298,69 +215,72 @@ void CJCSDlg::logIn()
 	GetDlgItem(IDC_EDIT1)->GetWindowTextA(num);
 	GetDlgItem(IDC_EDIT2)->GetWindowTextA(pw);
 
-	StudiesDlg *studies = new StudiesDlg();
-	studies->Create(IDD_DIALOG3, this);
-	studies->ShowWindow(SW_SHOW);
+	Person::who = per;
+	StudiesDlg *student = new StudiesDlg();
+	student->Create(IDD_DIALOG3, this);
+	student->ShowWindow(SW_SHOW);
 
-	switch (m_radio)
-	{
-	case 0:
-		MessageBox("请选择身份！");
-		break;
-	case 1:
-		if (pw == "000" && num == "000")
-		{
-			adDlg *ad = new adDlg();
-			ad->Create(IDD_DIALOG1, this);
-			ad->ShowWindow(SW_SHOW);
-		}
-		else
-		{
-			MessageBox("输入有误！");
-		}
-		break;
-	case 2:
-		judge = 1;
-		per = Person::person;
-		while (per->next != NULL)
-		{
-			if (per->num == num && per->pw == pw && per->status == "学委")
-			{
-				StudiesDlg *studies = new StudiesDlg();
-				studies->Create(IDD_DIALOG3, this);
-				studies->ShowWindow(SW_SHOW);
-				judge = 0;
-				break;
-			}
-			per = per->next;
-		}
-		if (judge)
-		{
-			MessageBox("输入有误!");
-		}
-		break;
-	case 3 :
-		judge = 1;
-		per = Person::person;
-		while (per->next != NULL)
-		{
-			if (per->num == num && per->pw == pw && per->status == "学生")
-			{
-				StrudentDlg *student = new StrudentDlg();
-				student->Create(IDD_DIALOG2, this);
-				student->ShowWindow(SW_SHOW);
-				judge = 0;
-				break;
-			}
-			per = per->next;
-		}
-		if (judge)
-		{
-			MessageBox("输入有误！");
-		}
-		break;
-	}
-	
+	//switch (m_radio)
+	//{
+	//case 0:
+	//	MessageBox("请选择身份！");
+	//	break;
+	//case 1:
+	//	if (pw == "000" && num == "000")
+	//	{
+	//		adDlg *ad = new adDlg();
+	//		ad->Create(IDD_DIALOG1, this);
+	//		ad->ShowWindow(SW_SHOW);
+	//	}
+	//	else
+	//	{
+	//		MessageBox("输入有误！");
+	//	}
+	//	break;
+	//case 2:
+	//	judge = 1;
+	//	per = Person::person;
+	//	while (per!= NULL)
+	//	{
+	//		if (per->num == num && per->pw == pw && per->status == "学委")
+	//		{
+	//			Person::who = per;
+	//			StudiesDlg *studies = new StudiesDlg();
+	//			studies->Create(IDD_DIALOG3, this);
+	//			studies->ShowWindow(SW_SHOW);
+	//			judge = 0;
+	//			break;
+	//		}
+	//		per = per->next;
+	//	}
+	//	if (judge)
+	//	{
+	//		MessageBox("输入有误!");
+	//	}
+	//	break;
+	//case 3 :
+	//	judge = 1;
+	//	per = Person::person;
+	//	while (per!= NULL)
+	//	{
+	//		if (per->num == num && per->pw == pw && per->status == "学生")
+	//		{
+	//			Person::who = per;
+	//			StrudentDlg *student = new StrudentDlg();
+	//			student->Create(IDD_DIALOG2, this);
+	//			student->ShowWindow(SW_SHOW);
+	//			judge = 0;
+	//			break;
+	//		}
+	//		per = per->next;
+	//	}
+	//	if (judge)
+	//	{
+	//		MessageBox("输入有误！");
+	//	}
+	//	break;
+	//}
+	//
 
 
 }
